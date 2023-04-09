@@ -9,6 +9,7 @@ namespace Phrity\Net\Mock;
 
 use Psr\Log\{
     LoggerInterface,
+    LoggerTrait,
     NullLogger
 };
 
@@ -17,61 +18,39 @@ use Psr\Log\{
  */
 class EchoLogger implements LoggerInterface
 {
-    public function emergency($message, array $context = []): void
-    {
-        $this->log('emergency', $message, $context);
-    }
-
-    public function alert($message, array $context = []): void
-    {
-        $this->log('alert', $message, $context);
-    }
-
-    public function critical($message, array $context = []): void
-    {
-        $this->log('critical', $message, $context);
-    }
-
-    public function error($message, array $context = []): void
-    {
-        $this->log('error', $message, $context);
-    }
-
-    public function warning($message, array $context = []): void
-    {
-        $this->log('warning', $message, $context);
-    }
-
-    public function notice($message, array $context = []): void
-    {
-        $this->log('notice', $message, $context);
-    }
-
-    public function info($message, array $context = []): void
-    {
-        $this->log('info', $message, $context);
-    }
-
-    public function debug($message, array $context = []): void
-    {
-        $this->log('debug', $message, $context);
-    }
+    use LoggerTrait;
 
     public function log($level, $message, array $context = []): void
     {
-        echo "[{$level}] {$message} [{$this->stringify($context)}]\n";
+        $context = $this->stringify($context);
+        $message = $this->interpolate($message, $context);
+        echo "[{$level}] {$message} {$this->format($context)}\n";
     }
 
-    private function stringify(array $context): string
+    private function format(array $context): string
     {
-        return implode(', ', array_map(function ($item) {
+        return json_encode($context, JSON_FORCE_OBJECT);
+    }
+
+    private function stringify(array $context): array
+    {
+        return array_map(function ($item) {
             if (is_scalar($item)) {
-                return json_encode($item);
+                return $item;
             }
             if (is_object($item)) {
                 return get_class($item);
             }
             return gettype($item);
-        }, $context));
+        }, $context);
+    }
+
+    private function interpolate(string $message, array $context = [])
+    {
+        $replace = [];
+        foreach ($context as $key => $val) {
+            $replace['{' . $key . '}'] = $val;
+        }
+        return strtr($message, $replace);
     }
 }

@@ -18,7 +18,7 @@ use Psr\Log\{
  */
 trait MockTrait
 {
-    private function mockHandle()
+    private function mockHandle(?callable $default = null)
     {
         $trace = debug_backtrace(0, 2);
         $class = substr($trace[1]['class'], 16);
@@ -26,7 +26,7 @@ trait MockTrait
         $params = $trace[1]['args'];
 
         Mock::getLogger()->debug("{$class}.{$method}", $params);
-        $default = function ($params) use($method) {
+        $default = $default ?: function ($params) use ($method) {
             return call_user_func_array("parent::{$method}", $params);
         };
         return Mock::runCallback("{$class}.{$method}", $params, $default);

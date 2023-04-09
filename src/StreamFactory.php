@@ -7,6 +7,11 @@ use Psr\Http\Message\{
     UriInterface
 };
 use Phrity\Net\StreamFactory as NetStreamFactory;
+use Phrity\Net\Stream as NetStream;
+use Phrity\Net\SocketStream as NetSocketStream;
+use Phrity\Net\SocketClient as NetSocketClient;
+use Phrity\Net\SocketServer as NetSocketServer;
+use Phrity\Net\StreamCollection as NetStreamCollection;
 
 
 /**
@@ -32,7 +37,7 @@ class StreamFactory extends NetStreamFactory
      * @param string $content String content with which to populate the stream.
      * @return \Phrity\Net\Stream A stream instance.
      */
-    public function createStream(string $content = ''): Stream
+    public function createStream(string $content = ''): NetStream
     {
         return $this->mockHandle();
     }
@@ -42,7 +47,7 @@ class StreamFactory extends NetStreamFactory
      * @param string $filename The filename or stream URI to use as basis of stream.
      * @param string $mode The mode with which to open the underlying filename/stream.
      */
-    public function createStreamFromFile(string $filename, string $mode = 'r'): Stream
+    public function createStreamFromFile(string $filename, string $mode = 'r'): NetStream
     {
         return $this->mockHandle();
     }
@@ -53,7 +58,7 @@ class StreamFactory extends NetStreamFactory
      * @param resource $resource The PHP resource to use as the basis for the stream.
      * @return \Phrity\Net\Stream A stream instance.
      */
-    public function createStreamFromResource($resource): Stream
+    public function createStreamFromResource($resource): NetStream
     {
         return $this->mockHandle();
     }
@@ -67,7 +72,7 @@ class StreamFactory extends NetStreamFactory
      * @param resource $resource The PHP resource to use as the basis for the stream.
      * @return \Phrity\Net\SocketStream A socket stream instance.
      */
-    public function createSocketStreamFromResource($resource): SocketStream
+    public function createSocketStreamFromResource($resource): NetSocketStream
     {
         return $this->mockHandle();
     }
@@ -81,15 +86,29 @@ class StreamFactory extends NetStreamFactory
     public function createSocketServer(
         UriInterface $uri,
         int $flags = STREAM_SERVER_BIND | STREAM_SERVER_LISTEN
-    ): SocketServer {
-        return $this->mockHandle();
+    ): NetSocketServer {
+        return $this->mockHandle(function ($params) {
+            return new SocketServer(...$params);
+        });
+    }
+
+    /**
+     * Create a new socket client.
+     * @param \Psr\Http\Message\UriInterface $uri The URI to connect to.
+     * @return \Phrity\Net\SocketClient A socket client instance.
+     */
+    public function createSocketClient(UriInterface $uri): NetSocketClient
+    {
+        return $this->mockHandle(function ($params) {
+            return new SocketClient(...$params);
+        });
     }
 
     /**
      * Create a new stream collection.
      * @return \Phrity\Net\StreamCollection A stream collection.
      */
-    public function createStreamCollection(): StreamCollection
+    public function createStreamCollection(): NetStreamCollection
     {
         return $this->mockHandle();
     }

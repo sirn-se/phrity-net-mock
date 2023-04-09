@@ -47,7 +47,7 @@ class StreamCollection extends NetStreamCollection
      * Collect all readable streams into new collection.
      * @return self New collection instance.
      */
-    public function getReadable(): self
+    public function getReadable(): NetStreamCollection
     {
         return $this->mockHandle();
     }
@@ -56,7 +56,7 @@ class StreamCollection extends NetStreamCollection
      * Collect all writable streams into new collection.
      * @return self New collection instance.
      */
-    public function getWritable(): self
+    public function getWritable(): NetStreamCollection
     {
         return $this->mockHandle();
     }
@@ -66,7 +66,7 @@ class StreamCollection extends NetStreamCollection
      * @param int $seconds Timeout in seconds.
      * @return self New collection instance.
      */
-    public function waitRead(int $seconds = 60): self
+    public function waitRead(int $seconds = 60): NetStreamCollection
     {
         return $this->mockHandle();
     }

@@ -29,7 +29,10 @@ class SocketServer extends NetSocketServer
      */
     public function accept(?int $timeout = null): ?SocketStream
     {
-        return $this->mockHandle();
+        return $this->mockHandle(function () {
+            $mock_stream = fopen('php://temp', 'r');
+            return new SocketStream($mock_stream);
+        });
     }
 
     /**

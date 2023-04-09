@@ -11,45 +11,8 @@ class SocketStream extends NetSocketStream
 {
     use MockTrait;
 
-    /**
-     * Get name of remote socket, or null if not connected.
-     * @return string|null
-     */
-    public function getRemoteName(): ?string
-    {
-        return $this->mockHandle();
-    }
 
-    /**
-     * If stream is in blocking mode.
-     * @return bool|null
-     */
-    public function isBlocking(): ?bool
-    {
-        return $this->mockHandle();
-    }
-
-    /**
-     * Toggle blocking/non-blocking mode.
-     * @param bool $enable Blocking mode to set.
-     * @return bool If operation was succesful.
-     */
-    public function setBlocking(bool $enable): bool
-    {
-        return $this->mockHandle();
-    }
-
-    /**
-     * Create new stream wrapper instance
-     * @param resource $resource A stream resource to wrap
-     */
-    public function __construct($stream)
-    {
-        return $this->mockHandle();
-    }
-
-
-    // ---------- PSR-7 methods ---------------------------------------------------------------------------------------
+    // ---------- Phrity\Net\Stream -------------------------------------------------------------------------------- //
 
     /**
      * Closes the stream and any underlying resources.
@@ -199,6 +162,86 @@ class SocketStream extends NetSocketStream
      * @return resource|null.
      */
     public function getResource()
+    {
+        return $this->mockHandle();
+    }
+
+    // ---------- Phrity\Net\SocketStream -------------------------------------------------------------------------- //
+
+    /**
+     * Create new stream wrapper instance
+     * @param resource $resource A stream resource to wrap
+     */
+    public function __construct($stream)
+    {
+        $this->mockHandle();
+    }
+
+    /**
+     * Get name of remote socket, or null if not connected.
+     * @return string|null
+     */
+    public function getRemoteName(): ?string
+    {
+        return $this->mockHandle();
+    }
+
+    /**
+     * Get name of local socket, or null if not connected.
+     * @return string|null
+     */
+    public function getLocalName(): ?string
+    {
+        return $this->mockHandle();
+    }
+
+    /**
+     * Get type of stream resoucre.
+     * @return string
+     */
+    public function getResourceType(): string
+    {
+        return $this->mockHandle();
+    }
+
+    /**
+     * If stream is in blocking mode.
+     * @return bool|null
+     */
+    public function isBlocking(): ?bool
+    {
+        return $this->mockHandle();
+    }
+
+    /**
+     * Toggle blocking/non-blocking mode.
+     * @param bool $enable Blocking mode to set.
+     * @return bool If operation was succesful.
+     */
+    public function setBlocking(bool $enable): bool
+    {
+        return $this->mockHandle();
+    }
+
+    /**
+     * Set timeout period on a stream.
+     * @param int $seconds Seconds to be set.
+     * @param int $microseconds Microseconds to be set.
+     * @return bool If operation was succesful.
+     * @throws \RuntimeException if stream is closed.
+     */
+    public function setTimeout(int $seconds, int $microseconds = 0): bool
+    {
+        return $this->mockHandle();
+    }
+
+    /**
+     * Read line from the stream.
+     * @param int $length Read up to $length bytes from the object and return them.
+     * @return string|null Returns the data read from the stream, or null of eof.
+     * @throws \RuntimeException if an error occurs.
+     */
+    public function readLine(int $length): ?string
     {
         return $this->mockHandle();
     }
