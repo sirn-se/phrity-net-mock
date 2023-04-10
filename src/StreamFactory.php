@@ -6,13 +6,14 @@ use Psr\Http\Message\{
     StreamFactoryInterface,
     UriInterface
 };
-use Phrity\Net\StreamFactory as NetStreamFactory;
-use Phrity\Net\Stream as NetStream;
-use Phrity\Net\SocketStream as NetSocketStream;
-use Phrity\Net\SocketClient as NetSocketClient;
-use Phrity\Net\SocketServer as NetSocketServer;
-use Phrity\Net\StreamCollection as NetStreamCollection;
-
+use Phrity\Net\{
+    SocketClient as NetSocketClient,
+    SocketServer as NetSocketServer,
+    SocketStream as NetSocketStream,
+    Stream as NetStream,
+    StreamCollection as NetStreamCollection,
+    StreamFactory as NetStreamFactory,
+};
 
 /**
  * Phrity\Net\Mock\StreamFactory class.
@@ -60,7 +61,9 @@ class StreamFactory extends NetStreamFactory
      */
     public function createStreamFromResource($resource): NetStream
     {
-        return $this->mockHandle();
+        return $this->mockHandle(function ($params) {
+            return new Stream(...$params);
+        });
     }
 
 
@@ -74,7 +77,9 @@ class StreamFactory extends NetStreamFactory
      */
     public function createSocketStreamFromResource($resource): NetSocketStream
     {
-        return $this->mockHandle();
+        return $this->mockHandle(function ($params) {
+            return new SocketStream(...$params);
+        });
     }
 
     /**
@@ -110,6 +115,8 @@ class StreamFactory extends NetStreamFactory
      */
     public function createStreamCollection(): NetStreamCollection
     {
-        return $this->mockHandle();
+        return $this->mockHandle(function ($params) {
+            return new StreamCollection(...$params);
+        });
     }
 }

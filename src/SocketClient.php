@@ -46,7 +46,7 @@ class SocketClient extends NetSocketClient
         return $this->mockHandle();
     }
 
-    public function setContext($context): self
+    public function setContext(?array $options = null, ?array $params = null): self
     {
         return $this->mockHandle();
     }

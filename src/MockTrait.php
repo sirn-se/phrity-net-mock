@@ -1,17 +1,11 @@
 <?php
 
-/**
- * File for Net\Mock\Mock class.
- * @package Phrity > Net > Mock > Mock
- */
-
 namespace Phrity\Net\Mock;
 
 use Psr\Log\{
     LoggerInterface,
     NullLogger
 };
-
 
 /**
  * Phrity\Net\Mock\MockTrait trait.

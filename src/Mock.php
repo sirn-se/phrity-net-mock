@@ -1,17 +1,11 @@
 <?php
 
-/**
- * File for Net\Mock\Mock class.
- * @package Phrity > Net > Mock > Mock
- */
-
 namespace Phrity\Net\Mock;
 
 use Psr\Log\{
     LoggerInterface,
     NullLogger
 };
-
 
 /**
  * Phrity\Net\Mock\Mock class.
@@ -37,8 +31,14 @@ class Mock
 
     public static function setCallback(callable $callback): void
     {
-        self::$callback = $callback;
         self::$counter = 0;
+        self::$callback = $callback;
+    }
+
+    public static function resetCallback(): void
+    {
+        self::$counter = 0;
+        self::$callback = null;
     }
 
     public static function getCallback(): callable
