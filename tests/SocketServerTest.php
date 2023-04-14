@@ -34,12 +34,12 @@ class SocketServerTest extends TestCase
                     $this->assertEquals('SocketServer.getTransports', $method);
                     $this->assertEquals([], $params);
                     $this->assertIsCallable($default);
-                    return $default($params);
+                    return ['tcp'];
                 case 2:
                     $this->assertEquals('SocketServer.getMetadata', $method);
                     $this->assertEquals([], $params);
                     $this->assertIsCallable($default);
-                    return $default($params);
+                    return [];
                 case 3:
                     $this->assertEquals('SocketServer.setBlocking', $method);
                     $this->assertEquals([true], $params);
@@ -68,7 +68,7 @@ class SocketServerTest extends TestCase
             }
         });
 
-        $uri = new Uri('tcp://0.0.0.0:80');
+        $uri = new Uri('tcp://0.0.0.0:8000');
         $server = new SocketServer($uri);
         $this->assertInstanceOf(SocketServer::class, $server);
         $this->assertisArray($server->getMetadata());
