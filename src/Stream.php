@@ -166,13 +166,4 @@ class Stream extends NetStream
     {
         return $this->mockHandle();
     }
-
-    /**
-     * Return underlying resource.
-     * @return resource|null.
-     */
-    public function getResource()
-    {
-        return $this->mockHandle();
-    }
 }

@@ -35,17 +35,6 @@ class Mock
         self::$callback = $callback;
     }
 
-    public static function resetCallback(): void
-    {
-        self::$counter = 0;
-        self::$callback = null;
-    }
-
-    public static function getCallback(): callable
-    {
-        return self::$callback;
-    }
-
     public static function runCallback(string $method, array $params, callable $default)
     {
         return self::$callback

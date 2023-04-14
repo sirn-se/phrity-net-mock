@@ -21,7 +21,8 @@ trait MockTrait
 
         Mock::getLogger()->debug("{$class}.{$method}", $params);
         $default = $default ?: function ($params) use ($method) {
-            return call_user_func_array("parent::{$method}", $params);
+            $parent = get_parent_class($this);
+            return call_user_func_array("{$parent}::{$method}", $params);
         };
         return Mock::runCallback("{$class}.{$method}", $params, $default);
     }
