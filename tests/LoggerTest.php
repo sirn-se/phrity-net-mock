@@ -40,6 +40,8 @@ class LoggerTest extends TestCase
     public function testMoggerLogger(): void
     {
         Mock::setLogger(new EchoLogger());
+        $this->assertInstanceOf(LoggerInterface::class, Mock::getLogger());
+        $this->assertInstanceOf(EchoLogger::class, Mock::getLogger());
 
         ob_start();
         $factory = new StreamFactory();
