@@ -98,6 +98,18 @@ class StreamFactory extends NetStreamFactory
     }
 
     /**
+     * Create a new socket client.
+     * @param \Psr\Http\Message\UriInterface $uri The URI to connect to.
+     * @return \Phrity\Net\SocketClient A socket client instance.
+     */
+    public function createSocketClient(UriInterface $uri): NetSocketClient
+    {
+        return $this->mockHandle(function ($params) {
+            return new SocketClient(...$params);
+        });
+    }
+
+    /**
      * Create a new stream collection.
      * @return \Phrity\Net\StreamCollection A stream collection.
      */

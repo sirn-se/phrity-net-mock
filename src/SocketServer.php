@@ -60,6 +60,15 @@ class SocketServer extends NetSocketServer
     }
 
     /**
+     * If server is in blocking mode.
+     * @return bool|null
+     */
+    public function isBlocking(): ?bool
+    {
+        return $this->mockHandle();
+    }
+
+    /**
      * Toggle blocking/non-blocking mode.
      * @param bool $enable Blocking mode to set.
      * @return bool If operation was succesful.

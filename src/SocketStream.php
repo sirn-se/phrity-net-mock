@@ -179,6 +179,24 @@ class SocketStream extends NetSocketStream
     }
 
     /**
+     * Get name of local socket, or null if not connected.
+     * @return string|null
+     */
+    public function getLocalName(): ?string
+    {
+        return $this->mockHandle();
+    }
+
+    /**
+     * Get type of stream resoucre.
+     * @return string
+     */
+    public function getResourceType(): string
+    {
+        return $this->mockHandle();
+    }
+
+    /**
      * If stream is in blocking mode.
      * @return bool|null
      */
@@ -193,6 +211,29 @@ class SocketStream extends NetSocketStream
      * @return bool If operation was succesful.
      */
     public function setBlocking(bool $enable): bool
+    {
+        return $this->mockHandle();
+    }
+
+    /**
+     * Set timeout period on a stream.
+     * @param int $seconds Seconds to be set.
+     * @param int $microseconds Microseconds to be set.
+     * @return bool If operation was succesful.
+     * @throws \RuntimeException if stream is closed.
+     */
+    public function setTimeout(int $seconds, int $microseconds = 0): bool
+    {
+        return $this->mockHandle();
+    }
+
+    /**
+     * Read line from the stream.
+     * @param int $length Read up to $length bytes from the object and return them.
+     * @return string|null Returns the data read from the stream, or null of eof.
+     * @throws \RuntimeException if an error occurs.
+     */
+    public function readLine(int $length): ?string
     {
         return $this->mockHandle();
     }

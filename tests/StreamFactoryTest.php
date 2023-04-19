@@ -167,6 +167,34 @@ class StreamFactoryTest extends TestCase
         $this->assertInstanceOf(SocketServer::class, $stream);
     }
 
+    public function testCreateSocketClient(): void
+    {
+        Mock::setCallback(function ($counter, $method, $params, $default) {
+            switch ($counter) {
+                case 0:
+                    $this->assertEquals('StreamFactory.__construct', $method);
+                    $this->assertEquals([], $params);
+                    $this->assertIsCallable($default);
+                    $default($params);
+                    break;
+                case 1:
+                    $this->assertEquals('StreamFactory.createSocketClient', $method);
+                    $this->assertInstanceOf(Uri::class, $params[0]);
+                    $this->assertIsCallable($default);
+                    return $default($params);
+                case 2:
+                    $this->assertEquals('SocketClient.__construct', $method);
+                    $this->assertInstanceOf(Uri::class, $params[0]);
+                    $this->assertIsCallable($default);
+                    break;
+            }
+        });
+        $uri = new Uri('tcp://localhost:80');
+        $factory = new StreamFactory();
+        $stream = $factory->createSocketClient($uri);
+        $this->assertInstanceOf(SocketClient::class, $stream);
+    }
+
     public function testCreateStreamCollection(): void
     {
         Mock::setCallback(function ($counter, $method, $params, $default) {
