@@ -11,6 +11,7 @@ use Phrity\Net\Mock\{
     SocketServer,
     SocketStream,
     Stream,
+    StreamCollection,
     StreamFactory,
 };
 use Phrity\Net\Uri;
@@ -164,5 +165,32 @@ class StreamFactoryTest extends TestCase
         $factory = new StreamFactory();
         $stream = $factory->createSocketServer($uri);
         $this->assertInstanceOf(SocketServer::class, $stream);
+    }
+
+    public function testCreateStreamCollection(): void
+    {
+        Mock::setCallback(function ($counter, $method, $params, $default) {
+            switch ($counter) {
+                case 0:
+                    $this->assertEquals('StreamFactory.__construct', $method);
+                    $this->assertEquals([], $params);
+                    $this->assertIsCallable($default);
+                    $default($params);
+                    break;
+                case 1:
+                    $this->assertEquals('StreamFactory.createStreamCollection', $method);
+                    $this->assertEquals([], $params);
+                    $this->assertIsCallable($default);
+                    return $default($params);
+                case 2:
+                    $this->assertEquals('StreamCollection.__construct', $method);
+                    $this->assertEquals([], $params);
+                    $this->assertIsCallable($default);
+                    break;
+            }
+        });
+        $factory = new StreamFactory();
+        $collection = $factory->createStreamCollection();
+        $this->assertInstanceOf(StreamCollection::class, $collection);
     }
 }

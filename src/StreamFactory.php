@@ -96,4 +96,15 @@ class StreamFactory extends NetStreamFactory
             return new SocketServer(...$params);
         });
     }
+
+    /**
+     * Create a new stream collection.
+     * @return \Phrity\Net\StreamCollection A stream collection.
+     */
+    public function createStreamCollection(): NetStreamCollection
+    {
+        return $this->mockHandle(function ($params) {
+            return new StreamCollection(...$params);
+        });
+    }
 }

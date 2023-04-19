@@ -1,7 +1,7 @@
 {
     "name": "phrity/net-mock",
     "type": "library",
-    "description": "",
+    "description": "Mock layer for phrity/net-stream",
     "homepage": "https://phrity.sirn.se/",
     "keywords": [],
     "license": "MIT",
@@ -19,7 +19,7 @@
     },
     "require": {
         "php": "^7.4 | ^8.0",
-        "phrity/net-stream": "~1.0.",
+        "phrity/net-stream": "~1.1.",
         "phrity/net-uri": "^1.0",
         "psr/log": "^1.0 | ^2.0 | ^3.0"
     },
