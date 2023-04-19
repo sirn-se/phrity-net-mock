@@ -46,22 +46,7 @@ class SocketClientTest extends TestCase
                     $this->assertIsCallable($default);
                     return $default($params);
                 case 4:
-                    $this->assertEquals('SocketServer.accept', $method);
-                    $this->assertEquals([], $params);
-                    $this->assertIsCallable($default);
-                    return $default($params);
-                case 5:
-                    $this->assertEquals('SocketStream.__construct', $method);
-                    $this->assertIsResource($params[0]);
-                    $this->assertIsCallable($default);
-                    return $default($params);
-                case 6:
-                    $this->assertEquals('SocketStream.getMetadata', $method);
-                    $this->assertEquals([], $params);
-                    $this->assertIsCallable($default);
-                    return $default($params);
-                case 7:
-                    $this->assertEquals('SocketServer.close', $method);
+                    $this->assertEquals('SocketClient.connect', $method);
                     $this->assertEquals([], $params);
                     $this->assertIsCallable($default);
                     return $default($params);
@@ -74,5 +59,7 @@ class SocketClientTest extends TestCase
         $client->setPersistent(true);
         $client->setTimeout(10);
         $client->setContext(['test' => []]);
+        $stream = $client->connect();
+        $this->assertInstanceOf(StreamInterface::class, $stream);
     }
 }
