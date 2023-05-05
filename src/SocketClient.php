@@ -25,13 +25,13 @@ class SocketClient extends NetSocketClient
 
     /**
      * Create a connection on remote socket.
-     * @return \Psr\Http\Message\StreamInterface|null The stream for opened conenction.
+     * @return \Psr\Http\Message\StreamInterface The stream for opened conenction.
      * @throws \RuntimeException if connection could not be created
      */
-    public function connect(): ?SocketStream
+    public function connect(): SocketStream
     {
         return $this->mockHandle(function () {
-            $mock_stream = fopen('php://temp', 'r');
+            $mock_stream = fopen('php://temp', 'rw');
             return new SocketStream($mock_stream);
         });
     }
