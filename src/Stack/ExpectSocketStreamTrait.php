@@ -26,7 +26,23 @@ trait ExpectSocketStreamTrait
         });
     }
 
-    private function expectSocketStreamResourceType(): StackItem
+    private function expectSocketStreamGetLocalName(): StackItem
+    {
+        return $this->pushStack(function (string $method, array $params): void {
+            $this->assertEquals('SocketStream.getLocalName', $method);
+            $this->assertEmpty($params);
+        });
+    }
+
+    private function expectSocketStreamGetRemoteName(): StackItem
+    {
+        return $this->pushStack(function (string $method, array $params): void {
+            $this->assertEquals('SocketStream.getRemoteName', $method);
+            $this->assertEmpty($params);
+        });
+    }
+
+    private function expectSocketStreamGetResourceType(): StackItem
     {
         return $this->pushStack(function (string $method, array $params): void {
             $this->assertEquals('SocketStream.getResourceType', $method);
@@ -34,7 +50,7 @@ trait ExpectSocketStreamTrait
         });
     }
 
-    private function expectSocketStreamTimeout(): StackItem
+    private function expectSocketStreamSetTimeout(): StackItem
     {
         return $this->pushStack(function (string $method, array $params): void {
             $this->assertEquals('SocketStream.setTimeout', $method);
@@ -76,6 +92,14 @@ trait ExpectSocketStreamTrait
             $this->assertEquals('SocketStream.readLine', $method);
             $this->assertCount(1, $params);
             $this->assertIsInt($params[0]);
+        });
+    }
+
+    private function expectSocketStreamTell(): StackItem
+    {
+        return $this->pushStack(function (string $method, array $params): void {
+            $this->assertEquals('SocketStream.tell', $method);
+            $this->assertEmpty($params);
         });
     }
 }
