@@ -12,12 +12,6 @@ use Phrity\Net\Mock\{
     SocketStream,
     StreamFactory
 };
-
-use Phrity\Net\Uri;
-use Psr\Http\Message\{
-    StreamFactoryInterface,
-    StreamInterface
-};
 use Phrity\Net\Mock\Stack\{
     ExpectSocketClientTrait,
     ExpectSocketServerTrait,
@@ -25,6 +19,12 @@ use Phrity\Net\Mock\Stack\{
     ExpectStreamFactoryTrait,
     StackItem,
 };
+use Phrity\Net\Uri;
+use Psr\Http\Message\{
+    StreamFactoryInterface,
+    StreamInterface
+};
+
 /**
  * Phrity\Net\Mock\Test\TraitTest test class.
  */
