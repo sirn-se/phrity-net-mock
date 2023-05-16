@@ -41,26 +41,31 @@ class SocketServerTest extends TestCase
                     $this->assertIsCallable($default);
                     return [];
                 case 3:
+                    $this->assertEquals('SocketServer.isBlocking', $method);
+                    $this->assertEquals([], $params);
+                    $this->assertIsCallable($default);
+                    return false;
+                case 4:
                     $this->assertEquals('SocketServer.setBlocking', $method);
                     $this->assertEquals([true], $params);
                     $this->assertIsCallable($default);
-                    return $default($params);
-                case 4:
+                    return true;
+                case 5:
                     $this->assertEquals('SocketServer.accept', $method);
                     $this->assertEquals([], $params);
                     $this->assertIsCallable($default);
                     return $default($params);
-                case 5:
+                case 6:
                     $this->assertEquals('SocketStream.__construct', $method);
                     $this->assertIsResource($params[0]);
                     $this->assertIsCallable($default);
                     return $default($params);
-                case 6:
+                case 7:
                     $this->assertEquals('SocketStream.getMetadata', $method);
                     $this->assertEquals([], $params);
                     $this->assertIsCallable($default);
                     return $default($params);
-                case 7:
+                case 8:
                     $this->assertEquals('SocketServer.close', $method);
                     $this->assertEquals([], $params);
                     $this->assertIsCallable($default);
@@ -72,6 +77,7 @@ class SocketServerTest extends TestCase
         $server = new SocketServer($uri);
         $this->assertInstanceOf(SocketServer::class, $server);
         $this->assertisArray($server->getMetadata());
+        $this->assertFalse($server->isBlocking());
         $this->assertTrue($server->setBlocking(true));
         $stream = $server->accept();
         $server->close();
