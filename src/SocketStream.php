@@ -11,8 +11,17 @@ class SocketStream extends NetSocketStream
 {
     use MockTrait;
 
+    /**
+     * Create new stream wrapper instance
+     * @param resource $resource A stream resource to wrap
+     */
+    public function __construct($stream)
+    {
+        $this->mockHandle();
+    }
 
-    // ---------- Phrity\Net\Stream -------------------------------------------------------------------------------- //
+
+    // ---------- PSR-7 methods ---------------------------------------------------------------------------------------
 
     /**
      * Closes the stream and any underlying resources.
@@ -158,15 +167,15 @@ class SocketStream extends NetSocketStream
     }
 
 
-    // ---------- Phrity\Net\SocketStream -------------------------------------------------------------------------- //
+    // ---------- Configuration ---------------------------------------------------------------------------------------
 
     /**
-     * Create new stream wrapper instance
-     * @param resource $resource A stream resource to wrap
+     * If stream is connected.
+     * @return bool
      */
-    public function __construct($stream)
+    public function isConnected(): bool
     {
-        $this->mockHandle();
+        return $this->mockHandle();
     }
 
     /**
@@ -226,6 +235,9 @@ class SocketStream extends NetSocketStream
     {
         return $this->mockHandle();
     }
+
+
+    // ---------- Operations ------------------------------------------------------------------------------------------
 
     /**
      * Read line from the stream.

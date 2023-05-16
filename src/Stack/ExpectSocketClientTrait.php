@@ -18,6 +18,15 @@ trait ExpectSocketClientTrait
         });
     }
 
+    private function expectSocketClientSetContext(): StackItem
+    {
+        return $this->pushStack(function (string $method, array $params): void {
+            $this->assertEquals('SocketClient.setContext', $method);
+            $this->assertGreaterThanOrEqual(0, count($params));
+            $this->assertLessThanOrEqual(2, count($params));
+        });
+    }
+
     private function expectSocketClientSetPersistent(): StackItem
     {
         return $this->pushStack(function (string $method, array $params): void {
@@ -32,16 +41,6 @@ trait ExpectSocketClientTrait
         return $this->pushStack(function (string $method, array $params): void {
             $this->assertEquals('SocketClient.setTimeout', $method);
             $this->assertCount(1, $params);
-            $this->assertIsInt($params[0]);
-        });
-    }
-
-    private function expectSocketClientSetContext(): StackItem
-    {
-        return $this->pushStack(function (string $method, array $params): void {
-            $this->assertEquals('SocketClient.setContext', $method);
-            $this->assertCount(1, $params);
-            $this->assertIsArray($params[0]);
         });
     }
 

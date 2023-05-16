@@ -20,7 +20,7 @@ use Psr\Http\Message\{
  */
 class SocketClientTest extends TestCase
 {
-    public function testSocketServer(): void
+    public function testSocketClient(): void
     {
         Mock::setCallback(function ($counter, $method, $params, $default) {
             switch ($counter) {

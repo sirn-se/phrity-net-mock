@@ -23,10 +23,46 @@ class SocketClient extends NetSocketClient
         $this->mockHandle();
     }
 
+    // ---------- Configuration ---------------------------------------------------------------------------------------
+
+    /**
+     * Set stream context.
+     * @param array|null $options
+     * @param array|null $params
+     * @return \Phrity\Net\SocketClient
+     */
+    public function setContext(?array $options = null, ?array $params = null): self
+    {
+        return $this->mockHandle();
+    }
+
+    /**
+     * Set connection persistency.
+     * @param bool $persistent
+     * @return \Phrity\Net\SocketClient
+     */
+    public function setPersistent(bool $persistent): self
+    {
+        return $this->mockHandle();
+    }
+
+    /**
+     * Set timeout in seconds.
+     * @param int|null $timeout
+     * @return \Phrity\Net\SocketClient
+     */
+    public function setTimeout(?int $timeout): self
+    {
+        return $this->mockHandle();
+    }
+
+
+    // ---------- Operations ------------------------------------------------------------------------------------------
+
     /**
      * Create a connection on remote socket.
-     * @return \Psr\Http\Message\StreamInterface The stream for opened conenction.
-     * @throws \RuntimeException if connection could not be created
+     * @return \Phrity\Net\SocketStream The stream for opened conenction.
+     * @throws StreamException if connection could not be created
      */
     public function connect(): SocketStream
     {
@@ -34,20 +70,5 @@ class SocketClient extends NetSocketClient
             $mock_stream = fopen('php://temp', 'rw');
             return new SocketStream($mock_stream);
         });
-    }
-
-    public function setPersistent(bool $persistent): self
-    {
-        return $this->mockHandle();
-    }
-
-    public function setTimeout(?int $timeout): self
-    {
-        return $this->mockHandle();
-    }
-
-    public function setContext(?array $options = null, ?array $params = null): self
-    {
-        return $this->mockHandle();
     }
 }

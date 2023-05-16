@@ -54,9 +54,9 @@ trait ExpectSocketStreamTrait
     {
         return $this->pushStack(function (string $method, array $params): void {
             $this->assertEquals('SocketStream.setTimeout', $method);
-            $this->assertCount(2, $params);
+            $this->assertGreaterThanOrEqual(1, count($params));
+            $this->assertLessThanOrEqual(2, count($params));
             $this->assertIsInt($params[0]);
-            $this->assertIsInt($params[1]);
         });
     }
 
