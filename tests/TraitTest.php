@@ -161,4 +161,36 @@ class TraitTest extends TestCase
         $this->assertInstanceOf(StackItem::class, $item);
         $factory->createSocketClient(new Uri('tcp://127.0.0.1'));
     }
+
+    public function testReturn(): void
+    {
+        $this->expectStreamFactory();
+        $factory = new StreamFactory();
+
+        $this->expectStreamFactoryCreateSockerClient()->setReturn(function () {
+            return new SocketClient(new Uri('ssl://127.0.0.1'));
+        });
+        $this->expectSocketClient();
+        $factory->createSocketClient(new Uri('tcp://127.0.0.1'));
+    }
+
+    public function testUnexpectedError(): void
+    {
+        // This should cause assertion error
+        $this->expectException('PHPUnit\Framework\AssertionFailedError');
+        $factory = new StreamFactory();
+    }
+
+    public function testExpectedError(): void
+    {
+        // This should cause assertion error (this is tricky to test)
+        $this->stack_items[] = 1;
+        try {
+            $this->tearDownStack();
+        } catch (\PHPUnit\Framework\AssertionFailedError $e) {
+            $this->stack_items = [];
+            return;
+        }
+        $this->fail('Expected items on stack did not fail');
+    }
 }
