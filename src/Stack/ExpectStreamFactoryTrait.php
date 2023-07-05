@@ -25,4 +25,13 @@ trait ExpectStreamFactoryTrait
             $this->assertInstanceOf('Psr\Http\Message\UriInterface', $params[0]);
         });
     }
+
+    private function expectStreamFactoryCreateSockerServer(): StackItem
+    {
+        return $this->pushStack(function (string $method, array $params): void {
+            $this->assertEquals('StreamFactory.createSocketServer', $method);
+            $this->assertCount(1, $params);
+            $this->assertInstanceOf('Psr\Http\Message\UriInterface', $params[0]);
+        });
+    }
 }

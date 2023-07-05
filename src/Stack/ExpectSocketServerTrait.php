@@ -48,8 +48,8 @@ trait ExpectSocketServerTrait
     {
         return $this->pushStack(function (string $method, array $params): void {
             $this->assertEquals('SocketServer.accept', $method);
-            $this->assertCount(1, $params);
-            $this->assertIsInt($params[0]);
+            $this->assertGreaterThanOrEqual(0, count($params));
+            $this->assertLessThanOrEqual(1, count($params));
         });
     }
 

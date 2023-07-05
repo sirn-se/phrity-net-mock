@@ -50,6 +50,14 @@ trait ExpectSocketStreamTrait
         });
     }
 
+    private function expectSocketStreamIsConnected(): StackItem
+    {
+        return $this->pushStack(function (string $method, array $params): void {
+            $this->assertEquals('SocketStream.isConnected', $method);
+            $this->assertEmpty($params);
+        });
+    }
+
     private function expectSocketStreamSetTimeout(): StackItem
     {
         return $this->pushStack(function (string $method, array $params): void {
