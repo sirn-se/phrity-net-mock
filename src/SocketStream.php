@@ -11,8 +11,17 @@ class SocketStream extends NetSocketStream
 {
     use MockTrait;
 
+    /**
+     * Create new stream wrapper instance
+     * @param resource $resource A stream resource to wrap
+     */
+    public function __construct($stream)
+    {
+        $this->mockHandle();
+    }
 
-    // ---------- Phrity\Net\Stream -------------------------------------------------------------------------------- //
+
+    // ---------- PSR-7 methods ---------------------------------------------------------------------------------------
 
     /**
      * Closes the stream and any underlying resources.
@@ -158,15 +167,15 @@ class SocketStream extends NetSocketStream
     }
 
 
-    // ---------- Phrity\Net\SocketStream -------------------------------------------------------------------------- //
+    // ---------- Configuration ---------------------------------------------------------------------------------------
 
     /**
-     * Create new stream wrapper instance
-     * @param resource $resource A stream resource to wrap
+     * If stream is connected.
+     * @return bool
      */
-    public function __construct($stream)
+    public function isConnected(): bool
     {
-        $this->mockHandle();
+        return $this->mockHandle();
     }
 
     /**
@@ -174,6 +183,24 @@ class SocketStream extends NetSocketStream
      * @return string|null
      */
     public function getRemoteName(): ?string
+    {
+        return $this->mockHandle();
+    }
+
+    /**
+     * Get name of local socket, or null if not connected.
+     * @return string|null
+     */
+    public function getLocalName(): ?string
+    {
+        return $this->mockHandle();
+    }
+
+    /**
+     * Get type of stream resoucre.
+     * @return string
+     */
+    public function getResourceType(): string
     {
         return $this->mockHandle();
     }
@@ -193,6 +220,32 @@ class SocketStream extends NetSocketStream
      * @return bool If operation was succesful.
      */
     public function setBlocking(bool $enable): bool
+    {
+        return $this->mockHandle();
+    }
+
+    /**
+     * Set timeout period on a stream.
+     * @param int $seconds Seconds to be set.
+     * @param int $microseconds Microseconds to be set.
+     * @return bool If operation was succesful.
+     * @throws \RuntimeException if stream is closed.
+     */
+    public function setTimeout(int $seconds, int $microseconds = 0): bool
+    {
+        return $this->mockHandle();
+    }
+
+
+    // ---------- Operations ------------------------------------------------------------------------------------------
+
+    /**
+     * Read line from the stream.
+     * @param int $length Read up to $length bytes from the object and return them.
+     * @return string|null Returns the data read from the stream, or null of eof.
+     * @throws \RuntimeException if an error occurs.
+     */
+    public function readLine(int $length): ?string
     {
         return $this->mockHandle();
     }

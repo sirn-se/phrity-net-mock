@@ -164,6 +164,31 @@ class SocketStreamTest extends TestCase
                     $this->assertEquals([true], $params);
                     $this->assertIsCallable($default);
                     return true;
+                case 5:
+                    $this->assertEquals('SocketStream.getLocalName', $method);
+                    $this->assertEquals([], $params);
+                    $this->assertIsCallable($default);
+                    return 'name';
+                case 6:
+                    $this->assertEquals('SocketStream.getResourceType', $method);
+                    $this->assertEquals([], $params);
+                    $this->assertIsCallable($default);
+                    return 'stream';
+                case 7:
+                    $this->assertEquals('SocketStream.setTimeout', $method);
+                    $this->assertEquals([10], $params);
+                    $this->assertIsCallable($default);
+                    return true;
+                case 8:
+                    $this->assertEquals('SocketStream.readLine', $method);
+                    $this->assertEquals([10], $params);
+                    $this->assertIsCallable($default);
+                    return 'abcdefghij';
+                case 9:
+                    $this->assertEquals('SocketStream.isConnected', $method);
+                    $this->assertEquals([], $params);
+                    $this->assertIsCallable($default);
+                    return true;
             }
         });
 
@@ -174,5 +199,10 @@ class SocketStreamTest extends TestCase
         $this->assertEquals('name', $stream->getRemoteName());
         $this->assertFalse($stream->isBlocking());
         $this->assertTrue($stream->setBlocking(true));
+        $this->assertEquals('name', $stream->getLocalName());
+        $this->assertEquals('stream', $stream->getResourceType());
+        $this->assertTrue($stream->setTimeout(10));
+        $this->assertEquals('abcdefghij', $stream->readLine(10));
+        $this->assertTrue($stream->isConnected());
     }
 }

@@ -29,6 +29,9 @@ class SocketServer extends NetSocketServer
     {
     }
 
+
+    // ---------- PSR-7 methods ---------------------------------------------------------------------------------------
+
     /**
      * Close this server socket.
      */
@@ -38,17 +41,19 @@ class SocketServer extends NetSocketServer
     }
 
     /**
-     * Accept a connection on a socket.
-     * @param int|null $timeout Override the default socket accept timeout.
-     * @return Psr\Http\Message\StreamInterface|null The stream for opened conenction.
+     * Get stream metadata as an associative array or retrieve a specific key.
+     * @param string $key Specific metadata to retrieve.
+     * @return array|mixed|null Returns an associative array if no key is
+     *     provided. Returns a specific key value if a key is provided and the
+     *     value is found, or null if the key is not found.
      */
-    public function accept(?int $timeout = null): ?SocketStream
+    public function getMetadata($key = null)
     {
-        return $this->mockHandle(function () {
-            $mock_stream = fopen('php://temp', 'r');
-            return new SocketStream($mock_stream);
-        });
+        return $this->mockHandle();
     }
+
+
+    // ---------- Configuration ---------------------------------------------------------------------------------------
 
     /**
      * Retrieve list of registered socket transports.
@@ -78,15 +83,19 @@ class SocketServer extends NetSocketServer
         return $this->mockHandle();
     }
 
+
+    // ---------- Operations ------------------------------------------------------------------------------------------
+
     /**
-     * Get stream metadata as an associative array or retrieve a specific key.
-     * @param string $key Specific metadata to retrieve.
-     * @return array|mixed|null Returns an associative array if no key is
-     *     provided. Returns a specific key value if a key is provided and the
-     *     value is found, or null if the key is not found.
+     * Accept a connection on a socket.
+     * @param int|null $timeout Override the default socket accept timeout.
+     * @return Psr\Http\Message\StreamInterface|null The stream for opened conenction.
      */
-    public function getMetadata($key = null)
+    public function accept(?int $timeout = null): ?SocketStream
     {
-        return $this->mockHandle();
+        return $this->mockHandle(function () {
+            $mock_stream = fopen('php://temp', 'rw');
+            return new SocketStream($mock_stream);
+        });
     }
 }

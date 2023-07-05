@@ -70,15 +70,14 @@ class StreamFactory extends NetStreamFactory
     // ---------- Extensions ------------------------------------------------------------------------------------------
 
     /**
-     * Create a new ocket stream from an existing resource.
-     * The stream MUST be readable and may be writable.
-     * @param resource $resource The PHP resource to use as the basis for the stream.
-     * @return \Phrity\Net\SocketStream A socket stream instance.
+     * Create a new socket client.
+     * @param \Psr\Http\Message\UriInterface $uri The URI to connect to.
+     * @return \Phrity\Net\SocketClient A socket client instance.
      */
-    public function createSocketStreamFromResource($resource): NetSocketStream
+    public function createSocketClient(UriInterface $uri): NetSocketClient
     {
         return $this->mockHandle(function ($params) {
-            return new SocketStream(...$params);
+            return new SocketClient(...$params);
         });
     }
 
@@ -94,6 +93,19 @@ class StreamFactory extends NetStreamFactory
     ): NetSocketServer {
         return $this->mockHandle(function ($params) {
             return new SocketServer(...$params);
+        });
+    }
+
+    /**
+     * Create a new ocket stream from an existing resource.
+     * The stream MUST be readable and may be writable.
+     * @param resource $resource The PHP resource to use as the basis for the stream.
+     * @return \Phrity\Net\SocketStream A socket stream instance.
+     */
+    public function createSocketStreamFromResource($resource): NetSocketStream
+    {
+        return $this->mockHandle(function ($params) {
+            return new SocketStream(...$params);
         });
     }
 
