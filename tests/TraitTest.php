@@ -124,6 +124,10 @@ class TraitTest extends TestCase
         $this->assertInstanceOf(StackItem::class, $item);
         $stream->getResourceType();
 
+        $item = $this->expectSocketStreamIsConnected();
+        $this->assertInstanceOf(StackItem::class, $item);
+        $stream->isConnected();
+
         $item = $this->expectSocketStreamSetTimeout();
         $this->assertInstanceOf(StackItem::class, $item);
         $stream->setTimeout(10);
@@ -160,6 +164,16 @@ class TraitTest extends TestCase
         $item = $this->expectSocketClient();
         $this->assertInstanceOf(StackItem::class, $item);
         $factory->createSocketClient(new Uri('tcp://127.0.0.1'));
+
+        $item = $this->expectStreamFactoryCreateSockerServer();
+        $this->assertInstanceOf(StackItem::class, $item);
+        $item = $this->expectSocketServer();
+        $this->assertInstanceOf(StackItem::class, $item);
+        $item = $this->expectSocketServerGetTransports();
+        $this->assertInstanceOf(StackItem::class, $item);
+        $item = $this->expectSocketServerGetMetadata();
+        $this->assertInstanceOf(StackItem::class, $item);
+        $factory->createSocketServer(new Uri('tcp://0.0.0.0:8000'));
     }
 
     public function testReturn(): void
