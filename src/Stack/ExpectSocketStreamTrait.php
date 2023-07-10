@@ -110,4 +110,12 @@ trait ExpectSocketStreamTrait
             $this->assertEmpty($params);
         });
     }
+
+    private function expectSocketStreamEof(): StackItem
+    {
+        return $this->pushStack(function (string $method, array $params): void {
+            $this->assertEquals('SocketStream.eof', $method);
+            $this->assertEmpty($params);
+        });
+    }
 }
