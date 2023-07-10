@@ -148,6 +148,10 @@ class TraitTest extends TestCase
         $this->assertInstanceOf(StackItem::class, $item);
         $stream->tell();
 
+        $item = $this->expectSocketStreamEof();
+        $this->assertInstanceOf(StackItem::class, $item);
+        $stream->eof();
+
         $item = $this->expectSocketStreamClose();
         $this->assertInstanceOf(StackItem::class, $item);
         $stream->close();
