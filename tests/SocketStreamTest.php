@@ -199,7 +199,6 @@ class SocketStreamTest extends TestCase
                     $this->assertEquals([], $params);
                     $this->assertIsCallable($default);
                     break;
-
             }
         });
 
