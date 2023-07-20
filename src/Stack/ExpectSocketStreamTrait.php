@@ -58,6 +58,38 @@ trait ExpectSocketStreamTrait
         });
     }
 
+    private function expectSocketStreamIsWritable(): StackItem
+    {
+        return $this->pushStack(function (string $method, array $params): void {
+            $this->assertEquals('SocketStream.isWritable', $method);
+            $this->assertEmpty($params);
+        });
+    }
+
+    private function expectSocketStreamCloseWrite(): StackItem
+    {
+        return $this->pushStack(function (string $method, array $params): void {
+            $this->assertEquals('SocketStream.closeWrite', $method);
+            $this->assertEmpty($params);
+        });
+    }
+
+    private function expectSocketStreamIsReadable(): StackItem
+    {
+        return $this->pushStack(function (string $method, array $params): void {
+            $this->assertEquals('SocketStream.isReadable', $method);
+            $this->assertEmpty($params);
+        });
+    }
+
+    private function expectSocketStreamCloseRead(): StackItem
+    {
+        return $this->pushStack(function (string $method, array $params): void {
+            $this->assertEquals('SocketStream.closeRead', $method);
+            $this->assertEmpty($params);
+        });
+    }
+
     private function expectSocketStreamSetTimeout(): StackItem
     {
         return $this->pushStack(function (string $method, array $params): void {

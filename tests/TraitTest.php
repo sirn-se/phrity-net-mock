@@ -152,9 +152,29 @@ class TraitTest extends TestCase
         $this->assertInstanceOf(StackItem::class, $item);
         $stream->eof();
 
+        $item = $this->expectSocketStreamCloseRead();
+        $this->assertInstanceOf(StackItem::class, $item);
+        $item = $this->expectSocketStreamGetMetadata();
+        $this->assertInstanceOf(StackItem::class, $item);
+        $stream->closeRead();
+
+        $item = $this->expectSocketStreamCloseWrite();
+        $this->assertInstanceOf(StackItem::class, $item);
+        $item = $this->expectSocketStreamClose();
+        $this->assertInstanceOf(StackItem::class, $item);
+        $stream->closeWrite();
+
         $item = $this->expectSocketStreamClose();
         $this->assertInstanceOf(StackItem::class, $item);
         $stream->close();
+
+        $item = $this->expectSocketStreamIsReadable();
+        $this->assertInstanceOf(StackItem::class, $item);
+        $stream->isReadable();
+
+        $item = $this->expectSocketStreamIsWritable();
+        $this->assertInstanceOf(StackItem::class, $item);
+        $stream->isWritable();
     }
 
     public function testStreamFactory(): void

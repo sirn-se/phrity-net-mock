@@ -189,6 +189,17 @@ class SocketStreamTest extends TestCase
                     $this->assertEquals([], $params);
                     $this->assertIsCallable($default);
                     return true;
+                case 10:
+                    $this->assertEquals('SocketStream.closeRead', $method);
+                    $this->assertEquals([], $params);
+                    $this->assertIsCallable($default);
+                    break;
+                case 11:
+                    $this->assertEquals('SocketStream.closeWrite', $method);
+                    $this->assertEquals([], $params);
+                    $this->assertIsCallable($default);
+                    break;
+
             }
         });
 
@@ -204,5 +215,7 @@ class SocketStreamTest extends TestCase
         $this->assertTrue($stream->setTimeout(10));
         $this->assertEquals('abcdefghij', $stream->readLine(10));
         $this->assertTrue($stream->isConnected());
+        $stream->closeRead();
+        $stream->closeWrite();
     }
 }
