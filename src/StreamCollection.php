@@ -69,7 +69,9 @@ class StreamCollection extends NetStreamCollection
      */
     public function waitRead(int $seconds = 60): NetStreamCollection
     {
-        return $this->mockHandle();
+        return $this->mockHandle(function ($params) {
+            return new self();
+        });
     }
 
 

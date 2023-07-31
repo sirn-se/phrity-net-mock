@@ -35,10 +35,10 @@ class Mock
         self::$callback = $callback;
     }
 
-    public static function runCallback(string $method, array $params, callable $default)
+    public static function runCallback(string $method, array $params, callable $default, object $instance)
     {
         return self::$callback
-            ? call_user_func(self::$callback, self::$counter++, $method, $params, $default)
+            ? call_user_func(self::$callback, self::$counter++, $method, $params, $default, $instance)
             : call_user_func($default, $params);
     }
 }
