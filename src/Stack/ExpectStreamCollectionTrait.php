@@ -41,20 +41,4 @@ trait ExpectStreamCollectionTrait
             $this->assertCountRange(0, 1, $params);
         });
     }
-
-    private function expectStreamCollectionRewind(): StackItem
-    {
-        return $this->pushStack(function (string $method, array $params): void {
-            $this->assertEquals('StreamCollection.rewind', $method);
-            $this->assertEmpty($params);
-        });
-    }
-
-    private function expectStreamCollectionValid(): StackItem
-    {
-        return $this->pushStack(function (string $method, array $params): void {
-            $this->assertEquals('StreamCollection.valid', $method);
-            $this->assertEmpty($params);
-        });
-    }
 }

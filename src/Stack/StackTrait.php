@@ -15,6 +15,7 @@ trait StackTrait
     {
         $this->stack_items = [];
         Mock::setCallback(function (int $counter, string $method, array $params, callable $default, $instance) {
+//echo " - $counter $method \n";
             $assert = array_shift($this->stack_items);
             if ($assert) {
                 return $assert($method, $params, $default, $instance);
