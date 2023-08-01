@@ -26,6 +26,14 @@ trait ExpectStreamCollectionTrait
         });
     }
 
+    private function expectStreamCollectionDetach(): StackItem
+    {
+        return $this->pushStack(function (string $method, array $params): void {
+            $this->assertEquals('StreamCollection.detach', $method);
+            $this->assertCount(1, $params);
+        });
+    }
+
     private function expectStreamCollectionGetReadable(): StackItem
     {
         return $this->pushStack(function (string $method, array $params): void {
