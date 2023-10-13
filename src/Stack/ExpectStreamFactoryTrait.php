@@ -43,7 +43,7 @@ trait ExpectStreamFactoryTrait
         });
     }
 
-    private function expectStreamFactoryCreateSockerClient(): StackItem
+    private function expectStreamFactoryCreateSocketClient(): StackItem
     {
         return $this->pushStack(function (string $method, array $params): void {
             $this->assertEquals('StreamFactory.createSocketClient', $method);
@@ -52,7 +52,7 @@ trait ExpectStreamFactoryTrait
         });
     }
 
-    private function expectStreamFactoryCreateSockerServer(): StackItem
+    private function expectStreamFactoryCreateSocketServer(): StackItem
     {
         return $this->pushStack(function (string $method, array $params): void {
             $this->assertEquals('StreamFactory.createSocketServer', $method);

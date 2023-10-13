@@ -183,13 +183,13 @@ class TraitTest extends TestCase
         $this->assertInstanceOf(StackItem::class, $item);
         $factory = new StreamFactory();
 
-        $item = $this->expectStreamFactoryCreateSockerClient();
+        $item = $this->expectStreamFactoryCreateSocketClient();
         $this->assertInstanceOf(StackItem::class, $item);
         $item = $this->expectSocketClient();
         $this->assertInstanceOf(StackItem::class, $item);
         $factory->createSocketClient(new Uri('tcp://127.0.0.1'));
 
-        $item = $this->expectStreamFactoryCreateSockerServer();
+        $item = $this->expectStreamFactoryCreateSocketServer();
         $this->assertInstanceOf(StackItem::class, $item);
         $item = $this->expectSocketServer();
         $this->assertInstanceOf(StackItem::class, $item);
@@ -205,7 +205,7 @@ class TraitTest extends TestCase
         $this->expectStreamFactory();
         $factory = new StreamFactory();
 
-        $this->expectStreamFactoryCreateSockerClient()->setReturn(function () {
+        $this->expectStreamFactoryCreateSocketClient()->setReturn(function () {
             return new SocketClient(new Uri('ssl://127.0.0.1'));
         });
         $this->expectSocketClient();
