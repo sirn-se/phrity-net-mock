@@ -70,6 +70,7 @@ $my_stream_user->run();
 
 | Version | PHP | |
 | --- | --- | --- |
+| `1.3` | `^7.4\|^8.0` | [phrity/net-stream v1.3](https://phrity.sirn.se/net-stream/1.3.0) |
 | `1.2` | `^7.4\|^8.0` | [phrity/net-stream v1.2](https://phrity.sirn.se/net-stream/1.2.0) |
 | `1.1` | `^7.4\|^8.0` | [phrity/net-stream v1.1](https://phrity.sirn.se/net-stream/1.1.0) |
 | `1.0` | `^7.4\|^8.0` | [phrity/net-stream v1.0](https://phrity.sirn.se/net-stream/1.0.0) |
