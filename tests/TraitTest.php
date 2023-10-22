@@ -119,6 +119,46 @@ class TraitTest extends TestCase
         $server->close();
     }
 
+    public function testtStream(): void
+    {
+        $file = __DIR__ . '/fixtures/stream.txt';
+        $resource = fopen($file, 'r+');
+
+        $item = $this->expectStream();
+        $this->assertInstanceOf(StackItem::class, $item);
+        $item = $this->expectStreamGetMetadata();
+        $this->assertInstanceOf(StackItem::class, $item);
+        $stream = new Stream($resource);
+
+        $item = $this->expectStreamWrite();
+        $this->assertInstanceOf(StackItem::class, $item);
+        $stream->write('hello');
+
+        $item = $this->expectStreamRead();
+        $this->assertInstanceOf(StackItem::class, $item);
+        $stream->read(5);
+
+        $item = $this->expectStreamTell();
+        $this->assertInstanceOf(StackItem::class, $item);
+        $stream->tell();
+
+        $item = $this->expectStreamEof();
+        $this->assertInstanceOf(StackItem::class, $item);
+        $stream->eof();
+
+        $item = $this->expectStreamClose();
+        $this->assertInstanceOf(StackItem::class, $item);
+        $stream->close();
+
+        $item = $this->expectStreamIsReadable();
+        $this->assertInstanceOf(StackItem::class, $item);
+        $stream->isReadable();
+
+        $item = $this->expectStreamIsWritable();
+        $this->assertInstanceOf(StackItem::class, $item);
+        $stream->isWritable();
+    }
+
     public function testSocketStream(): void
     {
         $file = __DIR__ . '/fixtures/stream.txt';
