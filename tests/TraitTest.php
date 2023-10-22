@@ -10,13 +10,17 @@ use Phrity\Net\Mock\{
     SocketClient,
     SocketServer,
     SocketStream,
-    StreamFactory
+    StreamCollection,
+    StreamFactory,
+    Stream
 };
 use Phrity\Net\Mock\Stack\{
     ExpectSocketClientTrait,
     ExpectSocketServerTrait,
     ExpectSocketStreamTrait,
+    ExpectStreamCollectionTrait,
     ExpectStreamFactoryTrait,
+    ExpectStreamTrait,
     StackItem,
 };
 use Phrity\Net\Uri;
@@ -33,7 +37,9 @@ class TraitTest extends TestCase
     use ExpectSocketClientTrait;
     use ExpectSocketServerTrait;
     use ExpectSocketStreamTrait;
+    use ExpectStreamCollectionTrait;
     use ExpectStreamFactoryTrait;
+    use ExpectStreamTrait;
 
     public function setUp(): void
     {
@@ -92,6 +98,14 @@ class TraitTest extends TestCase
         $this->assertInstanceOf(StackItem::class, $item);
         $server->setBlocking(true);
 
+        $item = $this->expectSocketServerIsWritable();
+        $this->assertInstanceOf(StackItem::class, $item);
+        $server->isWritable();
+
+        $item = $this->expectSocketServerIsReadable();
+        $this->assertInstanceOf(StackItem::class, $item);
+        $server->isReadable();
+
         $item = $this->expectSocketServerAccept();
         $this->assertInstanceOf(StackItem::class, $item);
         $item = $this->expectSocketStream();
@@ -99,6 +113,10 @@ class TraitTest extends TestCase
         $item = $this->expectSocketStreamGetMetadata();
         $this->assertInstanceOf(StackItem::class, $item);
         $server->accept(10);
+
+        $item = $this->expectSocketServerClose();
+        $this->assertInstanceOf(StackItem::class, $item);
+        $server->close();
     }
 
     public function testSocketStream(): void
@@ -198,6 +216,78 @@ class TraitTest extends TestCase
         $item = $this->expectSocketServerGetMetadata();
         $this->assertInstanceOf(StackItem::class, $item);
         $factory->createSocketServer(new Uri('tcp://0.0.0.0:8000'));
+
+        $item = $this->expectStreamFactoryCreateStream();
+        $this->assertInstanceOf(StackItem::class, $item);
+        $item = $this->expectStreamFactoryCreateStreamFromResource();
+        $this->assertInstanceOf(StackItem::class, $item);
+        $item = $this->expectStream();
+        $this->assertInstanceOf(StackItem::class, $item);
+        $item = $this->expectStreamGetMetadata();
+        $this->assertInstanceOf(StackItem::class, $item);
+        $factory->createStream();
+
+        $item = $this->expectStreamFactoryCreateStreamFromFile();
+        $this->assertInstanceOf(StackItem::class, $item);
+        $item = $this->expectStreamFactoryCreateStreamFromResource();
+        $this->assertInstanceOf(StackItem::class, $item);
+        $item = $this->expectStream();
+        $this->assertInstanceOf(StackItem::class, $item);
+        $item = $this->expectStreamGetMetadata();
+        $this->assertInstanceOf(StackItem::class, $item);
+        $factory->createStreamFromFile(__DIR__ . '/fixtures/stream.txt');
+
+        $file = __DIR__ . '/fixtures/stream.txt';
+        $resource = fopen($file, 'r+');
+        $item = $this->expectStreamFactoryCreateSocketStreamFromResource();
+        $this->assertInstanceOf(StackItem::class, $item);
+        $item = $this->expectSocketStream();
+        $this->assertInstanceOf(StackItem::class, $item);
+        $item = $this->expectSocketStreamGetMetadata();
+        $this->assertInstanceOf(StackItem::class, $item);
+        $factory->createSocketStreamFromResource($resource);
+
+        $item = $this->expectStreamFactoryCreateStreamCollection();
+        $this->assertInstanceOf(StackItem::class, $item);
+        $item = $this->expectStreamCollection();
+        $this->assertInstanceOf(StackItem::class, $item);
+        $factory->createStreamCollection();
+    }
+
+    public function testStreamCollection(): void
+    {
+        $item = $this->expectStreamCollection();
+        $this->assertInstanceOf(StackItem::class, $item);
+        $collection = new StreamCollection();
+
+        $file = __DIR__ . '/fixtures/stream.txt';
+        $resource = fopen($file, 'r+');
+
+        $item = $this->expectStream();
+        $this->assertInstanceOf(StackItem::class, $item);
+        $item = $this->expectStreamGetMetadata();
+        $this->assertInstanceOf(StackItem::class, $item);
+        $stream = new Stream($resource);
+
+        $item = $this->expectStreamCollectionAttach();
+        $this->assertInstanceOf(StackItem::class, $item);
+        $collection->attach($stream);
+
+        $item = $this->expectStreamCollectionGetReadable();
+        $this->assertInstanceOf(StackItem::class, $item);
+        $item = $this->expectStreamIsReadable();
+        $this->assertInstanceOf(StackItem::class, $item);
+        $collection->getReadable();
+
+        $item = $this->expectStreamCollectionWaitRead();
+        $this->assertInstanceOf(StackItem::class, $item);
+        $item = $this->expectStreamCollection();
+        $this->assertInstanceOf(StackItem::class, $item);
+        $collection->waitRead();
+
+        $item = $this->expectStreamCollectionDetach();
+        $this->assertInstanceOf(StackItem::class, $item);
+        $collection->detach($stream);
     }
 
     public function testReturn(): void

@@ -56,21 +56,31 @@ class SocketServerTest extends TestCase
                     $this->assertIsCallable($default);
                     return true;
                 case 6:
+                    $this->assertEquals('SocketServer.isReadable', $method);
+                    $this->assertEquals([], $params);
+                    $this->assertIsCallable($default);
+                    return true;
+                case 7:
+                    $this->assertEquals('SocketServer.isWritable', $method);
+                    $this->assertEquals([], $params);
+                    $this->assertIsCallable($default);
+                    return true;
+                case 8:
                     $this->assertEquals('SocketServer.accept', $method);
                     $this->assertEquals([], $params);
                     $this->assertIsCallable($default);
                     return $default($params);
-                case 7:
+                case 9:
                     $this->assertEquals('SocketStream.__construct', $method);
                     $this->assertIsResource($params[0]);
                     $this->assertIsCallable($default);
                     return $default($params);
-                case 8:
+                case 10:
                     $this->assertEquals('SocketStream.getMetadata', $method);
                     $this->assertEquals([], $params);
                     $this->assertIsCallable($default);
                     return $default($params);
-                case 9:
+                case 11:
                     $this->assertEquals('SocketServer.close', $method);
                     $this->assertEquals([], $params);
                     $this->assertIsCallable($default);
@@ -84,6 +94,8 @@ class SocketServerTest extends TestCase
         $this->assertisArray($server->getMetadata());
         $this->assertFalse($server->isBlocking());
         $this->assertTrue($server->setBlocking(true));
+        $this->assertTrue($server->isReadable());
+        $this->assertTrue($server->isWritable());
         $stream = $server->accept();
         $server->close();
     }

@@ -83,7 +83,7 @@ class StreamCollectionTest extends TestCase
                 case 12:
                     $this->assertEquals('StreamCollection.waitRead', $method);
                     $this->assertIsCallable($default);
-                    return new StreamCollection();
+                    return $default($params);
                 case 13:
                     $this->assertEquals('StreamCollection.__construct', $method);
                     $this->assertEquals([], $params);
