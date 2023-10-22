@@ -61,4 +61,28 @@ trait ExpectSocketServerTrait
             $this->assertLessThanOrEqual(1, count($params));
         });
     }
+
+    private function expectSocketServerIsWritable(): StackItem
+    {
+        return $this->pushStack(function (string $method, array $params): void {
+            $this->assertEquals('SocketServer.isWritable', $method);
+            $this->assertEmpty($params);
+        });
+    }
+
+    private function expectSocketServerIsReadable(): StackItem
+    {
+        return $this->pushStack(function (string $method, array $params): void {
+            $this->assertEquals('SocketServer.isReadable', $method);
+            $this->assertEmpty($params);
+        });
+    }
+
+    private function expectSocketServerClose(): StackItem
+    {
+        return $this->pushStack(function (string $method, array $params): void {
+            $this->assertEquals('SocketServer.close', $method);
+            $this->assertEmpty($params);
+        });
+    }
 }

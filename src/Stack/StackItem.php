@@ -29,11 +29,13 @@ class StackItem
         return $this;
     }
 
-    public function __invoke(string $method, array $params, callable $default)
+    public function __invoke(string $method, array $params, callable $default, object $instance)
     {
         foreach ($this->asserts as $assert) {
             call_user_func($assert, $method, $params);
         }
-        return $this->return ? call_user_func($this->return, $params) : $default($params);
+        return $this->return
+            ? call_user_func($this->return, $params, $default, $instance)
+            : $default($params);
     }
 }

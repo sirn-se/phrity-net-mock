@@ -24,6 +24,6 @@ trait MockTrait
             $parent = get_parent_class($this);
             return call_user_func_array("{$parent}::{$method}", $params);
         };
-        return Mock::runCallback("{$class}.{$method}", $params, $default);
+        return Mock::runCallback("{$class}.{$method}", $params, $default, $this);
     }
 }

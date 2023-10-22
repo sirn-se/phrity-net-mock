@@ -249,4 +249,21 @@ class SocketStream extends NetSocketStream
     {
         return $this->mockHandle();
     }
+
+    /**
+     * Closes the stream for further reading.
+     * @return void
+     */
+    public function closeRead(): void
+    {
+        $this->mockHandle();
+    }
+    /**
+     * Closes the stream for further writing.
+     * @return void
+     */
+    public function closeWrite(): void
+    {
+        $this->mockHandle();
+    }
 }

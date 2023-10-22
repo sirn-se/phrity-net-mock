@@ -69,47 +69,22 @@ class StreamCollectionTest extends TestCase
                     $this->assertIsCallable($default);
                     return $default($params);
                 case 9:
-                    $this->assertEquals('StreamCollection.rewind', $method);
-                    $this->assertIsCallable($default);
-                    $default($params);
-                    break;
-                case 10:
-                    $this->assertEquals('StreamCollection.valid', $method);
-                    $this->assertIsCallable($default);
-                    return $default($params);
-                case 11:
-                    $this->assertEquals('StreamCollection.current', $method);
-                    $this->assertIsCallable($default);
-                    return $default($params);
-                case 12:
-                    $this->assertEquals('StreamCollection.key', $method);
-                    $this->assertIsCallable($default);
-                    return $default($params);
-                case 13:
-                    $this->assertEquals('StreamCollection.next', $method);
-                    $this->assertIsCallable($default);
-                    return $default($params);
-                case 14:
-                    $this->assertEquals('StreamCollection.valid', $method);
-                    $this->assertIsCallable($default);
-                    return $default($params);
-                case 15:
                     $this->assertEquals('StreamCollection.detach', $method);
                     $this->assertIsCallable($default);
                     return $default($params);
-                case 16:
+                case 10:
                     $this->assertEquals('StreamCollection.getReadable', $method);
                     $this->assertIsCallable($default);
                     return $default($params);
-                case 17:
+                case 11:
                     $this->assertEquals('StreamCollection.getWritable', $method);
                     $this->assertIsCallable($default);
                     return $default($params);
-                case 18:
+                case 12:
                     $this->assertEquals('StreamCollection.waitRead', $method);
                     $this->assertIsCallable($default);
-                    return new StreamCollection();
-                case 19:
+                    return $default($params);
+                case 13:
                     $this->assertEquals('StreamCollection.__construct', $method);
                     $this->assertEquals([], $params);
                     $this->assertIsCallable($default);

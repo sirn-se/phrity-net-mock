@@ -69,7 +69,9 @@ class StreamCollection extends NetStreamCollection
      */
     public function waitRead(int $seconds = 60): NetStreamCollection
     {
-        return $this->mockHandle();
+        return $this->mockHandle(function ($params) {
+            return new self();
+        });
     }
 
 
@@ -80,52 +82,6 @@ class StreamCollection extends NetStreamCollection
      * @return int Number of streams in collection.
      */
     public function count(): int
-    {
-        return $this->mockHandle();
-    }
-
-
-    // ---------- Iterator interface implementation -------------------------------------------------------------------
-
-    /**
-     * Return the current stream.
-     * @return mixed Current stream.
-     */
-    public function current(): Stream
-    {
-        return $this->mockHandle();
-    }
-
-    /**
-     * Return the key of the current stream.
-     * @return scalar|null Current key.
-     */
-    public function key(): string
-    {
-        return $this->mockHandle();
-    }
-
-    /**
-     * Move forward to next stream.
-     */
-    public function next(): void
-    {
-        $this->mockHandle();
-    }
-
-    /**
-     * Rewind the Iterator to the first stream.
-     */
-    public function rewind(): void
-    {
-        $this->mockHandle();
-    }
-
-    /**
-     * Checks if current position is valid.
-     * @return bool True if valid.
-     */
-    public function valid(): bool
     {
         return $this->mockHandle();
     }

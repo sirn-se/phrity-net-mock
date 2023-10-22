@@ -29,6 +29,24 @@ class SocketServer extends NetSocketServer
     {
     }
 
+    /**
+     * Returns whether or not the stream is readable.
+     * @return bool
+     */
+    public function isReadable(): bool
+    {
+        return $this->mockHandle();
+    }
+
+    /**
+     * Returns whether or not the stream is writable.
+     * @return bool
+     */
+    public function isWritable(): bool
+    {
+        return $this->mockHandle();
+    }
+
 
     // ---------- PSR-7 methods ---------------------------------------------------------------------------------------
 
