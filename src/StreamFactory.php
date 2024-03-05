@@ -84,13 +84,10 @@ class StreamFactory extends NetStreamFactory
     /**
      * Create a new socket server.
      * @param \Psr\Http\Message\UriInterface $uri The URI to create server on.
-     * @param int $flags Flags to set on socket.
      * @return \Phrity\Net\SocketServer A socket server instance.
      */
-    public function createSocketServer(
-        UriInterface $uri,
-        int $flags = STREAM_SERVER_BIND | STREAM_SERVER_LISTEN
-    ): NetSocketServer {
+    public function createSocketServer(UriInterface $uri): NetSocketServer
+    {
         return $this->mockHandle(function ($params) {
             return new SocketServer(...$params);
         });

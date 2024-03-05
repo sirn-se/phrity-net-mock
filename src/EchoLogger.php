@@ -12,6 +12,7 @@ use Psr\Log\{
     LoggerTrait,
     NullLogger
 };
+use Stringable;
 
 /**
  * Phrity\Net\Mock\EchoLogger class.
@@ -20,7 +21,7 @@ class EchoLogger implements LoggerInterface
 {
     use LoggerTrait;
 
-    public function log($level, $message, array $context = []): void
+    public function log($level, Stringable|string $message, array $context = []): void
     {
         $context = $this->stringify($context);
         $message = $this->interpolate($message, $context);

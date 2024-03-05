@@ -17,7 +17,7 @@ class SocketServer extends NetSocketServer
      * Psr\Http\Message\UriInterface $uri The URI to open socket on.
      * int $flags Flags to set on socket.
      */
-    public function __construct(UriInterface $uri, int $flags = STREAM_SERVER_BIND | STREAM_SERVER_LISTEN)
+    public function __construct(UriInterface $uri)
     {
         $this->mockHandle();
     }
@@ -65,7 +65,7 @@ class SocketServer extends NetSocketServer
      *     provided. Returns a specific key value if a key is provided and the
      *     value is found, or null if the key is not found.
      */
-    public function getMetadata($key = null)
+    public function getMetadata($key = null): mixed
     {
         return $this->mockHandle();
     }
@@ -86,7 +86,7 @@ class SocketServer extends NetSocketServer
      * If server is in blocking mode.
      * @return bool|null
      */
-    public function isBlocking(): ?bool
+    public function isBlocking(): bool|null
     {
         return $this->mockHandle();
     }
@@ -109,7 +109,7 @@ class SocketServer extends NetSocketServer
      * @param int|null $timeout Override the default socket accept timeout.
      * @return Psr\Http\Message\StreamInterface|null The stream for opened conenction.
      */
-    public function accept(?int $timeout = null): ?SocketStream
+    public function accept(int|null $timeout = null): SocketStream|null
     {
         return $this->mockHandle(function () {
             $mock_stream = fopen('php://temp', 'rw');

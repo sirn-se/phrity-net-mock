@@ -10,7 +10,7 @@ class StackItem
     private $asserts = [];
     private $return = null;
 
-    public function __construct(?callable $assert = null)
+    public function __construct(callable|null $assert = null)
     {
         if ($assert) {
             $this->addAssert($assert);

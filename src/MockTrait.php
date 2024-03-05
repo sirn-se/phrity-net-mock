@@ -12,7 +12,7 @@ use Psr\Log\{
  */
 trait MockTrait
 {
-    private function mockHandle(?callable $default = null)
+    private function mockHandle(callable|null $default = null)
     {
         $trace = debug_backtrace(0, 2);
         $class = substr($trace[1]['class'], 16);

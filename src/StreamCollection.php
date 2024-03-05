@@ -29,7 +29,7 @@ class StreamCollection extends NetStreamCollection
      * @param string|null $key Definable name of stream.
      * @return string Name of stream.
      */
-    public function attach(NetStream $attach, ?string $key = null): string
+    public function attach(NetStream $attach, string|null $key = null): string
     {
         return $this->mockHandle();
     }
@@ -39,7 +39,7 @@ class StreamCollection extends NetStreamCollection
      * @param Stream|string $detach Stream or name of stream  to detach.
      * @return bool If a stream was detached.
      */
-    public function detach($detach): bool
+    public function detach(NetStream|string $detach): bool
     {
         return $this->mockHandle();
     }

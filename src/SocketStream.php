@@ -49,7 +49,7 @@ class SocketStream extends NetSocketStream
      *     provided. Returns a specific key value if a key is provided and the
      *     value is found, or null if the key is not found.
      */
-    public function getMetadata($key = null)
+    public function getMetadata(string|null $key = null): mixed
     {
         return $this->mockHandle();
     }
@@ -96,7 +96,7 @@ class SocketStream extends NetSocketStream
      * Get the size of the stream if known.
      * @return int|null Returns the size in bytes if known, or null if unknown.
      */
-    public function getSize(): ?int
+    public function getSize(): int|null
     {
         return $this->mockHandle();
     }
@@ -115,7 +115,7 @@ class SocketStream extends NetSocketStream
      * @param int $offset Stream offset
      * @param int $whence Specifies how the cursor position will be calculated based on the seek offset.
      */
-    public function seek($offset, $whence = SEEK_SET): void
+    public function seek(int $offset, int $whence = SEEK_SET): void
     {
         $this->mockHandle();
     }
@@ -182,7 +182,7 @@ class SocketStream extends NetSocketStream
      * Get name of remote socket, or null if not connected.
      * @return string|null
      */
-    public function getRemoteName(): ?string
+    public function getRemoteName(): string|null
     {
         return $this->mockHandle();
     }
@@ -191,7 +191,7 @@ class SocketStream extends NetSocketStream
      * Get name of local socket, or null if not connected.
      * @return string|null
      */
-    public function getLocalName(): ?string
+    public function getLocalName(): string|null
     {
         return $this->mockHandle();
     }
@@ -209,7 +209,7 @@ class SocketStream extends NetSocketStream
      * If stream is in blocking mode.
      * @return bool|null
      */
-    public function isBlocking(): ?bool
+    public function isBlocking(): bool|null
     {
         return $this->mockHandle();
     }
@@ -245,7 +245,7 @@ class SocketStream extends NetSocketStream
      * @return string|null Returns the data read from the stream, or null of eof.
      * @throws \RuntimeException if an error occurs.
      */
-    public function readLine(int $length): ?string
+    public function readLine(int $length): string|null
     {
         return $this->mockHandle();
     }

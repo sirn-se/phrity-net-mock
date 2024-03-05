@@ -31,7 +31,7 @@ class SocketClient extends NetSocketClient
      * @param array|null $params
      * @return \Phrity\Net\SocketClient
      */
-    public function setContext(?array $options = null, ?array $params = null): self
+    public function setContext(array|null $options = null, array|null $params = null): self
     {
         return $this->mockHandle();
     }
@@ -51,7 +51,7 @@ class SocketClient extends NetSocketClient
      * @param int|null $timeout
      * @return \Phrity\Net\SocketClient
      */
-    public function setTimeout(?int $timeout): self
+    public function setTimeout(int|null $timeout): self
     {
         return $this->mockHandle();
     }
