@@ -19,7 +19,7 @@
     },
     "require": {
         "php": "^8.0",
-        "phrity/net-stream": "dev-main-v2 as 2.0",
+        "phrity/net-stream": "^2.0",
         "phrity/net-uri": "^2.0",
         "psr/log": "^1.0 | ^2.0 | ^3.0"
     },
