@@ -19,6 +19,15 @@ trait ExpectSocketServerTrait
         });
     }
 
+    private function expectSocketServerSetContext(): StackItem
+    {
+        return $this->pushStack(function (string $method, array $params): void {
+            $this->assertEquals('SocketServer.setContext', $method);
+            $this->assertGreaterThanOrEqual(0, count($params));
+            $this->assertLessThanOrEqual(2, count($params));
+        });
+    }
+
     private function expectSocketServerGetTransports(): StackItem
     {
         return $this->pushStack(function (string $method, array $params): void {

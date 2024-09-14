@@ -66,21 +66,26 @@ class SocketServerTest extends TestCase
                     $this->assertIsCallable($default);
                     return true;
                 case 8:
+                    $this->assertEquals('SocketServer.setContext', $method);
+                    $this->assertEquals([['test' => []]], $params);
+                    $this->assertIsCallable($default);
+                    return $default($params);
+                case 9:
                     $this->assertEquals('SocketServer.accept', $method);
                     $this->assertEquals([], $params);
                     $this->assertIsCallable($default);
                     return $default($params);
-                case 9:
+                case 10:
                     $this->assertEquals('SocketStream.__construct', $method);
                     $this->assertIsResource($params[0]);
                     $this->assertIsCallable($default);
                     return $default($params);
-                case 10:
+                case 11:
                     $this->assertEquals('SocketStream.getMetadata', $method);
                     $this->assertEquals([], $params);
                     $this->assertIsCallable($default);
                     return $default($params);
-                case 11:
+                case 12:
                     $this->assertEquals('SocketServer.close', $method);
                     $this->assertEquals([], $params);
                     $this->assertIsCallable($default);
@@ -96,6 +101,7 @@ class SocketServerTest extends TestCase
         $this->assertTrue($server->setBlocking(true));
         $this->assertTrue($server->isReadable());
         $this->assertTrue($server->isWritable());
+        $server->setContext(['test' => []]);
         $stream = $server->accept();
         $server->close();
     }
