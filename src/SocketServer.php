@@ -74,6 +74,17 @@ class SocketServer extends NetSocketServer
     // ---------- Configuration ---------------------------------------------------------------------------------------
 
     /**
+     * Set stream context.
+     * @param array|null $options
+     * @param array|null $params
+     * @return \Phrity\Net\SocketServer
+     */
+    public function setContext(array|null $options = null, array|null $params = null): self
+    {
+        return $this->mockHandle();
+    }
+
+    /**
      * Retrieve list of registered socket transports.
      * @return array List of registered transports.
      */
