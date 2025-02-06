@@ -9,6 +9,7 @@ use PHPUnit\Framework\{
     TestCase,
 };
 use Phrity\Net\Mock\{
+    Context,
     Mock,
     SocketClient,
     SocketServer,
@@ -378,6 +379,49 @@ class TraitTest extends TestCase
         $item = $this->expectStreamCollectionDetach();
         $this->assertInstanceOf(StackItem::class, $item);
         $collection->detach($stream);
+    }
+
+    public function testContext(): void
+    {
+        $item = $this->expectContext();
+        $this->assertInstanceOf(StackItem::class, $item);
+        $context = new Context();
+
+        $item = $this->expectContextSetParams();
+        $this->assertInstanceOf(StackItem::class, $item);
+        $context->setParams(['notification' => 'testp-1']);
+
+        $item = $this->expectContextSetParam();
+        $this->assertInstanceOf(StackItem::class, $item);
+        $item = $this->expectContextSetParams();
+        $this->assertInstanceOf(StackItem::class, $item);
+        $context->setParam('notification', 'testp-2');
+
+        $item = $this->expectContextGetParams();
+        $this->assertInstanceOf(StackItem::class, $item);
+        $context->getParams();
+
+        $item = $this->expectContextGetParam();
+        $this->assertInstanceOf(StackItem::class, $item);
+        $context->getParam('notification');
+
+        $item = $this->expectContextSetOptions();
+        $this->assertInstanceOf(StackItem::class, $item);
+        $item = $this->expectContextSetOption();
+        $this->assertInstanceOf(StackItem::class, $item);
+        $context->setOptions(['testo' => ['test1' => 'test-1']]);
+
+        $item = $this->expectContextSetOption();
+        $this->assertInstanceOf(StackItem::class, $item);
+        $context->setOption('testo', 'test2', 'test-2');
+
+        $item = $this->expectContextGetOptions();
+        $this->assertInstanceOf(StackItem::class, $item);
+        $context->getOptions();
+
+        $item = $this->expectContextGetOption();
+        $this->assertInstanceOf(StackItem::class, $item);
+        $context->getOption('testo', 'test2');
     }
 
     public function testReturn(): void
