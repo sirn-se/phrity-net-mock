@@ -2,7 +2,10 @@
 
 namespace Phrity\Net\Mock;
 
-use Phrity\Net\SocketClient as NetSocketClient;
+use Phrity\Net\{
+    Context as NetContext,
+    SocketClient as NetSocketClient
+};
 use Psr\Http\Message\UriInterface;
 
 /**
@@ -18,9 +21,11 @@ class SocketClient extends NetSocketClient
      * int $flags Flags to set on socket.
      * @throws \RuntimeException if unable to create socket.
      */
-    public function __construct(UriInterface $uri)
+    public function __construct(UriInterface $uri, NetContext|null $context = null)
     {
-        $this->mockHandle();
+        $this->mockHandle(function () use ($uri, $context) {
+            parent::__construct($uri, $context ?? new Context());
+        });
     }
 
     // ---------- Configuration ---------------------------------------------------------------------------------------
@@ -29,9 +34,14 @@ class SocketClient extends NetSocketClient
      * Set stream context.
      * @param array|null $options
      * @param array|null $params
-     * @return \Phrity\Net\SocketClient
+     * @return self
      */
-    public function setContext(array|null $options = null, array|null $params = null): self
+    public function setContext(NetContext|array|null $options = null, array|null $params = null): self
+    {
+        return $this->mockHandle();
+    }
+
+    public function getContext(): NetContext
     {
         return $this->mockHandle();
     }
@@ -39,7 +49,7 @@ class SocketClient extends NetSocketClient
     /**
      * Set connection persistency.
      * @param bool $persistent
-     * @return \Phrity\Net\SocketClient
+     * @return self
      */
     public function setPersistent(bool $persistent): self
     {
@@ -49,7 +59,7 @@ class SocketClient extends NetSocketClient
     /**
      * Set timeout in seconds.
      * @param int|null $timeout
-     * @return \Phrity\Net\SocketClient
+     * @return self
      */
     public function setTimeout(int|null $timeout): self
     {
@@ -61,8 +71,7 @@ class SocketClient extends NetSocketClient
 
     /**
      * Create a connection on remote socket.
-     * @return \Phrity\Net\SocketStream The stream for opened conenction.
-     * @throws StreamException if connection could not be created
+     * @return SocketStream The stream for opened conenction.
      */
     public function connect(): SocketStream
     {

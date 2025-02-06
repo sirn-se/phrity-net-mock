@@ -6,6 +6,7 @@ namespace Phrity\Net\Mock\Test;
 
 use PHPUnit\Framework\TestCase;
 use Phrity\Net\Mock\{
+    Context,
     Mock,
     Stream,
 };
@@ -35,76 +36,87 @@ class StreamTest extends TestCase
                     $this->assertIsCallable($default);
                     return $default($params);
                 case 2:
+                    $this->assertEquals('Context.__construct', $method);
+                    $this->assertIsResource($params[0]);
+                    $this->assertIsCallable($default);
+                    $default($params);
+                    break;
+                case 3:
                     $this->assertEquals('Stream.tell', $method);
                     $this->assertEquals([], $params);
                     $this->assertIsCallable($default);
                     return $default($params);
-                case 3:
+                case 4:
                     $this->assertEquals('Stream.eof', $method);
                     $this->assertEquals([], $params);
                     $this->assertIsCallable($default);
                     return $default($params);
-                case 4:
+                case 5:
                     $this->assertEquals('Stream.read', $method);
                     $this->assertEquals([4], $params);
                     $this->assertIsCallable($default);
                     return 'test';
-                case 5:
+                case 6:
                     $this->assertEquals('Stream.write', $method);
                     $this->assertEquals(['test'], $params);
                     $this->assertIsCallable($default);
                     return 4;
-                case 6:
+                case 7:
                     $this->assertEquals('Stream.getSize', $method);
                     $this->assertEquals([], $params);
                     $this->assertIsCallable($default);
                     return 4;
-                case 7:
+                case 8:
                     $this->assertEquals('Stream.isSeekable', $method);
                     $this->assertEquals([], $params);
                     $this->assertIsCallable($default);
                     return $default($params);
-                case 8:
+                case 9:
                     $this->assertEquals('Stream.seek', $method);
                     $this->assertEquals([1], $params);
                     $this->assertIsCallable($default);
                     return $default($params);
-                case 9:
+                case 10:
                     $this->assertEquals('Stream.rewind', $method);
                     $this->assertEquals([], $params);
                     $this->assertIsCallable($default);
                     return $default($params);
-                case 10:
+                case 11:
                     $this->assertEquals('Stream.seek', $method);
                     $this->assertEquals([0], $params);
                     $this->assertIsCallable($default);
                     return $default($params);
-                case 11:
+                case 12:
                     $this->assertEquals('Stream.isWritable', $method);
                     $this->assertEquals([], $params);
                     $this->assertIsCallable($default);
                     return $default($params);
-                case 12:
+                case 13:
                     $this->assertEquals('Stream.isReadable', $method);
                     $this->assertEquals([], $params);
                     $this->assertIsCallable($default);
                     return $default($params);
-                case 13:
+                case 14:
                     $this->assertEquals('Stream.getContents', $method);
                     $this->assertEquals([], $params);
                     $this->assertIsCallable($default);
                     return 'test';
-                case 14:
+                case 15:
                     $this->assertEquals('Stream.__toString', $method);
                     $this->assertEquals([], $params);
                     $this->assertIsCallable($default);
                     return 'test';
-                case 15:
+                case 16:
+                    $this->assertEquals('Stream.getContext', $method);
+                    $this->assertEmpty($params);
+                    $this->assertIsCallable($default);
+                    return $default($params);
+                case 17:
                     $this->assertEquals('Stream.detach', $method);
                     $this->assertEquals([], $params);
                     $this->assertIsCallable($default);
                     return;
-                case 16:
+                case 18:
                     $this->assertEquals('Stream.close', $method);
                     $this->assertEquals([], $params);
                     $this->assertIsCallable($default);
@@ -130,6 +142,8 @@ class StreamTest extends TestCase
         $this->assertTrue($stream->isReadable());
         $this->assertEquals('test', $stream->getContents());
         $this->assertEquals('test', $stream->__toString());
+        $context = $stream->getContext();
+        $this->assertInstanceOf(Context::class, $context);
         $stream->detach();
         $stream->close();
     }

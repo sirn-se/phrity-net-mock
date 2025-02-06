@@ -3,7 +3,7 @@
 namespace Phrity\Net\Mock\Stack;
 
 /**
- * PhpUnit test methods for SocketStream.
+ * Expect methods for SocketStream.
  */
 trait ExpectSocketStreamTrait
 {

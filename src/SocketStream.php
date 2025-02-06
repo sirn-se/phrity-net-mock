@@ -2,7 +2,10 @@
 
 namespace Phrity\Net\Mock;
 
-use Phrity\Net\SocketStream as NetSocketStream;
+use Phrity\Net\{
+    Context as NetContext,
+    SocketStream as NetSocketStream
+};
 
 /**
  * Phrity\Net\Mock\SocketStream class.
@@ -13,11 +16,14 @@ class SocketStream extends NetSocketStream
 
     /**
      * Create new stream wrapper instance
-     * @param resource $resource A stream resource to wrap
+     * @param resource $stream A stream resource to wrap
      */
     public function __construct($stream)
     {
-        $this->mockHandle();
+        $this->mockHandle(function () use ($stream) {
+            parent::__construct($stream);
+            $this->context = new Context($stream);
+        });
     }
 
 
@@ -37,7 +43,7 @@ class SocketStream extends NetSocketStream
      * After the stream has been detached, the stream is in an unusable state.
      * @return resource|null Underlying stream, if any
      */
-    public function detach()
+    public function detach(): mixed
     {
         return $this->mockHandle();
     }
@@ -153,6 +159,11 @@ class SocketStream extends NetSocketStream
      * @return string
      */
     public function getContents(): string
+    {
+        return $this->mockHandle();
+    }
+
+    public function getContext(): NetContext
     {
         return $this->mockHandle();
     }

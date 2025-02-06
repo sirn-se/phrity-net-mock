@@ -4,8 +4,12 @@ declare(strict_types=1);
 
 namespace Phrity\Net\Mock\Test;
 
-use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\{
+    AssertionFailedError,
+    TestCase,
+};
 use Phrity\Net\Mock\{
+    Context,
     Mock,
     SocketClient,
     SocketServer,
@@ -15,6 +19,7 @@ use Phrity\Net\Mock\{
     Stream
 };
 use Phrity\Net\Mock\Stack\{
+    ExpectContextTrait,
     ExpectSocketClientTrait,
     ExpectSocketServerTrait,
     ExpectSocketStreamTrait,
@@ -34,6 +39,7 @@ use Psr\Http\Message\{
  */
 class TraitTest extends TestCase
 {
+    use ExpectContextTrait;
     use ExpectSocketClientTrait;
     use ExpectSocketServerTrait;
     use ExpectSocketStreamTrait;
@@ -55,11 +61,21 @@ class TraitTest extends TestCase
     {
         $item = $this->expectSocketClient();
         $this->assertInstanceOf(StackItem::class, $item);
+        $item = $this->expectContext();
+        $this->assertInstanceOf(StackItem::class, $item);
         $client = new SocketClient(new Uri('tcp://127.0.0.1'));
 
         $item = $this->expectSocketClientSetContext();
         $this->assertInstanceOf(StackItem::class, $item);
+        $item = $this->expectContextSetOptions();
+        $this->assertInstanceOf(StackItem::class, $item);
+        $item = $this->expectContextSetParams();
+        $this->assertInstanceOf(StackItem::class, $item);
         $client->setContext([]);
+
+        $item = $this->expectSocketClientGetContext();
+        $this->assertInstanceOf(StackItem::class, $item);
+        $client->getContext();
 
         $item = $this->expectSocketClientSetPersistent();
         $this->assertInstanceOf(StackItem::class, $item);
@@ -75,6 +91,8 @@ class TraitTest extends TestCase
         $this->assertInstanceOf(StackItem::class, $item);
         $item = $this->expectSocketStreamGetMetadata();
         $this->assertInstanceOf(StackItem::class, $item);
+        $this->assertInstanceOf(StackItem::class, $item);
+        $item = $this->expectContext();
         $client->connect();
     }
 
@@ -82,7 +100,11 @@ class TraitTest extends TestCase
     {
         $item = $this->expectSocketServer();
         $this->assertInstanceOf(StackItem::class, $item);
+        $item = $this->expectContext();
+        $this->assertInstanceOf(StackItem::class, $item);
         $item = $this->expectSocketServerGetTransports();
+        $this->assertInstanceOf(StackItem::class, $item);
+        $item = $this->expectContextGetResource();
         $this->assertInstanceOf(StackItem::class, $item);
         $item = $this->expectSocketServerGetMetadata();
         $this->assertInstanceOf(StackItem::class, $item);
@@ -108,6 +130,10 @@ class TraitTest extends TestCase
 
         $item = $this->expectSocketServerSetContext();
         $this->assertInstanceOf(StackItem::class, $item);
+        $item = $this->expectContextSetOptions();
+        $this->assertInstanceOf(StackItem::class, $item);
+        $item = $this->expectContextSetParams();
+        $this->assertInstanceOf(StackItem::class, $item);
         $server->setContext([]);
 
         $item = $this->expectSocketServerAccept();
@@ -115,6 +141,8 @@ class TraitTest extends TestCase
         $item = $this->expectSocketStream();
         $this->assertInstanceOf(StackItem::class, $item);
         $item = $this->expectSocketStreamGetMetadata();
+        $this->assertInstanceOf(StackItem::class, $item);
+        $item = $this->expectContext();
         $this->assertInstanceOf(StackItem::class, $item);
         $server->accept(10);
 
@@ -130,7 +158,10 @@ class TraitTest extends TestCase
 
         $item = $this->expectStream();
         $this->assertInstanceOf(StackItem::class, $item);
+
         $item = $this->expectStreamGetMetadata();
+        $this->assertInstanceOf(StackItem::class, $item);
+        $item = $this->expectContext();
         $this->assertInstanceOf(StackItem::class, $item);
         $stream = new Stream($resource);
 
@@ -171,6 +202,8 @@ class TraitTest extends TestCase
         $item = $this->expectSocketStream();
         $this->assertInstanceOf(StackItem::class, $item);
         $item = $this->expectSocketStreamGetMetadata();
+        $this->assertInstanceOf(StackItem::class, $item);
+        $item = $this->expectContext();
         $this->assertInstanceOf(StackItem::class, $item);
         $stream = new SocketStream($resource);
 
@@ -249,13 +282,19 @@ class TraitTest extends TestCase
         $this->assertInstanceOf(StackItem::class, $item);
         $item = $this->expectSocketClient();
         $this->assertInstanceOf(StackItem::class, $item);
+        $item = $this->expectContext();
+        $this->assertInstanceOf(StackItem::class, $item);
         $factory->createSocketClient(new Uri('tcp://127.0.0.1'));
 
         $item = $this->expectStreamFactoryCreateSocketServer();
         $this->assertInstanceOf(StackItem::class, $item);
         $item = $this->expectSocketServer();
         $this->assertInstanceOf(StackItem::class, $item);
+        $item = $this->expectContext();
+        $this->assertInstanceOf(StackItem::class, $item);
         $item = $this->expectSocketServerGetTransports();
+        $this->assertInstanceOf(StackItem::class, $item);
+        $item = $this->expectContextGetResource();
         $this->assertInstanceOf(StackItem::class, $item);
         $item = $this->expectSocketServerGetMetadata();
         $this->assertInstanceOf(StackItem::class, $item);
@@ -269,6 +308,8 @@ class TraitTest extends TestCase
         $this->assertInstanceOf(StackItem::class, $item);
         $item = $this->expectStreamGetMetadata();
         $this->assertInstanceOf(StackItem::class, $item);
+        $item = $this->expectContext();
+        $this->assertInstanceOf(StackItem::class, $item);
         $factory->createStream();
 
         $item = $this->expectStreamFactoryCreateStreamFromFile();
@@ -279,6 +320,8 @@ class TraitTest extends TestCase
         $this->assertInstanceOf(StackItem::class, $item);
         $item = $this->expectStreamGetMetadata();
         $this->assertInstanceOf(StackItem::class, $item);
+        $item = $this->expectContext();
+        $this->assertInstanceOf(StackItem::class, $item);
         $factory->createStreamFromFile(__DIR__ . '/fixtures/stream.txt');
 
         $file = __DIR__ . '/fixtures/stream.txt';
@@ -288,6 +331,8 @@ class TraitTest extends TestCase
         $item = $this->expectSocketStream();
         $this->assertInstanceOf(StackItem::class, $item);
         $item = $this->expectSocketStreamGetMetadata();
+        $this->assertInstanceOf(StackItem::class, $item);
+        $item = $this->expectContext();
         $this->assertInstanceOf(StackItem::class, $item);
         $factory->createSocketStreamFromResource($resource);
 
@@ -310,6 +355,8 @@ class TraitTest extends TestCase
         $item = $this->expectStream();
         $this->assertInstanceOf(StackItem::class, $item);
         $item = $this->expectStreamGetMetadata();
+        $this->assertInstanceOf(StackItem::class, $item);
+        $item = $this->expectContext();
         $this->assertInstanceOf(StackItem::class, $item);
         $stream = new Stream($resource);
 
@@ -334,6 +381,49 @@ class TraitTest extends TestCase
         $collection->detach($stream);
     }
 
+    public function testContext(): void
+    {
+        $item = $this->expectContext();
+        $this->assertInstanceOf(StackItem::class, $item);
+        $context = new Context();
+
+        $item = $this->expectContextSetParams();
+        $this->assertInstanceOf(StackItem::class, $item);
+        $context->setParams(['notification' => 'testp-1']);
+
+        $item = $this->expectContextSetParam();
+        $this->assertInstanceOf(StackItem::class, $item);
+        $item = $this->expectContextSetParams();
+        $this->assertInstanceOf(StackItem::class, $item);
+        $context->setParam('notification', 'testp-2');
+
+        $item = $this->expectContextGetParams();
+        $this->assertInstanceOf(StackItem::class, $item);
+        $context->getParams();
+
+        $item = $this->expectContextGetParam();
+        $this->assertInstanceOf(StackItem::class, $item);
+        $context->getParam('notification');
+
+        $item = $this->expectContextSetOptions();
+        $this->assertInstanceOf(StackItem::class, $item);
+        $item = $this->expectContextSetOption();
+        $this->assertInstanceOf(StackItem::class, $item);
+        $context->setOptions(['testo' => ['test1' => 'test-1']]);
+
+        $item = $this->expectContextSetOption();
+        $this->assertInstanceOf(StackItem::class, $item);
+        $context->setOption('testo', 'test2', 'test-2');
+
+        $item = $this->expectContextGetOptions();
+        $this->assertInstanceOf(StackItem::class, $item);
+        $context->getOptions();
+
+        $item = $this->expectContextGetOption();
+        $this->assertInstanceOf(StackItem::class, $item);
+        $context->getOption('testo', 'test2');
+    }
+
     public function testReturn(): void
     {
         $this->expectStreamFactory();
@@ -343,13 +433,14 @@ class TraitTest extends TestCase
             return new SocketClient(new Uri('ssl://127.0.0.1'));
         });
         $this->expectSocketClient();
+        $this->expectContext();
         $factory->createSocketClient(new Uri('tcp://127.0.0.1'));
     }
 
     public function testUnexpectedError(): void
     {
         // This should cause assertion error
-        $this->expectException('PHPUnit\Framework\AssertionFailedError');
+        $this->expectException(AssertionFailedError::class);
         $factory = new StreamFactory();
     }
 

@@ -2,8 +2,10 @@
 
 namespace Phrity\Net\Mock\Stack;
 
+use Psr\Http\Message\UriInterface;
+
 /**
- * PhpUnit test methods for SocketServer.
+ * Expect methods for SocketServer.
  */
 trait ExpectSocketServerTrait
 {
@@ -15,7 +17,7 @@ trait ExpectSocketServerTrait
             $this->assertEquals('SocketServer.__construct', $method);
             $this->assertGreaterThanOrEqual(1, count($params));
             $this->assertLessThanOrEqual(2, count($params));
-            $this->assertInstanceOf('Psr\Http\Message\UriInterface', $params[0]);
+            $this->assertInstanceOf(UriInterface::class, $params[0]);
         });
     }
 

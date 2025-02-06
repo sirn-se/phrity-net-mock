@@ -3,7 +3,7 @@
 namespace Phrity\Net\Mock\Stack;
 
 /**
- * PhpUnit test methods for StreamCollection.
+ * Expect methods for StreamCollection.
  */
 trait ExpectStreamCollectionTrait
 {
