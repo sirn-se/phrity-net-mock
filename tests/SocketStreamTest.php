@@ -86,12 +86,62 @@ class SocketStreamTest extends TestCase
                     $this->assertEmpty($params);
                     $this->assertIsCallable($default);
                     return $default($params);
+
                 case 12:
+                    $this->assertEquals('SocketStream.getSize', $method);
+                    $this->assertEmpty($params);
+                    $this->assertIsCallable($default);
+                    return $default($params);
+                case 13:
+                    $this->assertEquals('SocketStream.isSeekable', $method);
+                    $this->assertEmpty($params);
+                    $this->assertIsCallable($default);
+                    return $default($params);
+
+                case 14:
+                    $this->assertEquals('SocketStream.seek', $method);
+                    $this->assertEquals([1], $params);
+                    $this->assertIsCallable($default);
+                    $default($params);
+                    break;
+                case 15:
+                    $this->assertEquals('SocketStream.rewind', $method);
+                    $this->assertEmpty($params);
+                    $this->assertIsCallable($default);
+                    $default($params);
+                    break;
+                case 16:
+                    $this->assertEquals('SocketStream.seek', $method);
+                    $this->assertEquals([0], $params);
+                    $this->assertIsCallable($default);
+                    $default($params);
+                    break;
+                case 17:
+                    $this->assertEquals('SocketStream.getContents', $method);
+                    $this->assertEmpty($params);
+                    $this->assertIsCallable($default);
+                    return $default($params);
+                case 18:
+                    $this->assertEquals('SocketStream.__toString', $method);
+                    $this->assertEmpty($params);
+                    $this->assertIsCallable($default);
+                    return $default($params);
+                case 19:
+                    $this->assertEquals('SocketStream.isSeekable', $method);
+                    $this->assertEmpty($params);
+                    $this->assertIsCallable($default);
+                    return false;
+                case 20:
+                    $this->assertEquals('SocketStream.getContents', $method);
+                    $this->assertEmpty($params);
+                    $this->assertIsCallable($default);
+                    return $default($params);
+                case 21:
                     $this->assertEquals('SocketStream.closeRead', $method);
                     $this->assertEquals([], $params);
                     $this->assertIsCallable($default);
                     break;
-                case 13:
+                case 22:
                     $this->assertEquals('SocketStream.closeWrite', $method);
                     $this->assertEquals([], $params);
                     $this->assertIsCallable($default);
@@ -113,7 +163,14 @@ class SocketStreamTest extends TestCase
         $this->assertTrue($stream->isConnected());
         $context = $stream->getContext();
         $this->assertInstanceOf(Context::class, $context);
+        $stream->getSize();
+        $stream->isSeekable();
+        $stream->seek(1);
+        $stream->rewind();
+        $stream->getContents();
+        $stream->__toString();
         $stream->closeRead();
         $stream->closeWrite();
+        $stream->detach();
     }
 }
