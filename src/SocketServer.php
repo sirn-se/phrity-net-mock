@@ -2,7 +2,10 @@
 
 namespace Phrity\Net\Mock;
 
-use Phrity\Net\SocketServer as NetSocketServer;
+use Phrity\Net\{
+    Context as NetContext,
+    SocketServer as NetSocketServer
+};
 use Psr\Http\Message\UriInterface;
 
 /**
@@ -17,9 +20,11 @@ class SocketServer extends NetSocketServer
      * Psr\Http\Message\UriInterface $uri The URI to open socket on.
      * int $flags Flags to set on socket.
      */
-    public function __construct(UriInterface $uri)
+    public function __construct(UriInterface $uri, NetContext|null $context = null)
     {
-        $this->mockHandle();
+        $this->mockHandle(function () use ($uri, $context) {
+            parent::__construct($uri, $context ?? new Context());
+        });
     }
 
     /**
@@ -65,7 +70,7 @@ class SocketServer extends NetSocketServer
      *     provided. Returns a specific key value if a key is provided and the
      *     value is found, or null if the key is not found.
      */
-    public function getMetadata($key = null): mixed
+    public function getMetadata(string|null $key = null): mixed
     {
         return $this->mockHandle();
     }
@@ -77,9 +82,14 @@ class SocketServer extends NetSocketServer
      * Set stream context.
      * @param array|null $options
      * @param array|null $params
-     * @return \Phrity\Net\SocketServer
+     * @return self
      */
-    public function setContext(array|null $options = null, array|null $params = null): self
+    public function setContext(NetContext|array|null $options = null, array|null $params = null): self
+    {
+        return $this->mockHandle();
+    }
+
+    public function getContext(): NetContext
     {
         return $this->mockHandle();
     }
@@ -118,7 +128,7 @@ class SocketServer extends NetSocketServer
     /**
      * Accept a connection on a socket.
      * @param int|null $timeout Override the default socket accept timeout.
-     * @return Psr\Http\Message\StreamInterface|null The stream for opened conenction.
+     * @return SocketStream|null The stream for opened conenction.
      */
     public function accept(int|null $timeout = null): SocketStream|null
     {

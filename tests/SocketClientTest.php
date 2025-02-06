@@ -6,6 +6,7 @@ namespace Phrity\Net\Mock\Test;
 
 use PHPUnit\Framework\TestCase;
 use Phrity\Net\Mock\{
+    Context,
     Mock,
     SocketClient,
 };
@@ -31,21 +32,32 @@ class SocketClientTest extends TestCase
                     $default($params);
                     break;
                 case 1:
+                    $this->assertEquals('Context.__construct', $method);
+                    $this->assertEmpty($params);
+                    $this->assertIsCallable($default);
+                    $default($params);
+                    break;
+                case 2:
                     $this->assertEquals('SocketClient.setPersistent', $method);
                     $this->assertEquals([true], $params);
                     $this->assertIsCallable($default);
                     return $default($params);
-                case 2:
+                case 3:
                     $this->assertEquals('SocketClient.setTimeout', $method);
                     $this->assertEquals([10], $params);
                     $this->assertIsCallable($default);
                     return $default($params);
-                case 3:
-                    $this->assertEquals('SocketClient.setContext', $method);
-                    $this->assertEquals([['test' => []]], $params);
+                case 4:
+                    $this->assertEquals('SocketClient.getContext', $method);
+                    $this->assertEmpty($params);
                     $this->assertIsCallable($default);
                     return $default($params);
-                case 4:
+                case 5:
+                    $this->assertEquals('SocketClient.setContext', $method);
+                    $this->assertInstanceOf(Context::class, $params[0]);
+                    $this->assertIsCallable($default);
+                    return $default($params);
+                case 6:
                     $this->assertEquals('SocketClient.connect', $method);
                     $this->assertEquals([], $params);
                     $this->assertIsCallable($default);
@@ -58,7 +70,9 @@ class SocketClientTest extends TestCase
         $this->assertInstanceOf(SocketClient::class, $client);
         $client->setPersistent(true);
         $client->setTimeout(10);
-        $client->setContext(['test' => []]);
+        $context = $client->getContext();
+        $client->setContext($context);
+        $this->assertInstanceOf(Context::class, $context);
         $stream = $client->connect();
         $this->assertInstanceOf(StreamInterface::class, $stream);
     }

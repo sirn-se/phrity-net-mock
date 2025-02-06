@@ -7,6 +7,7 @@ use Psr\Http\Message\{
     UriInterface
 };
 use Phrity\Net\{
+    Context,
     SocketClient as NetSocketClient,
     SocketServer as NetSocketServer,
     SocketStream as NetSocketStream,
@@ -74,7 +75,7 @@ class StreamFactory extends NetStreamFactory
      * @param \Psr\Http\Message\UriInterface $uri The URI to connect to.
      * @return \Phrity\Net\SocketClient A socket client instance.
      */
-    public function createSocketClient(UriInterface $uri): NetSocketClient
+    public function createSocketClient(UriInterface $uri, Context|null $context = null): NetSocketClient
     {
         return $this->mockHandle(function ($params) {
             return new SocketClient(...$params);
@@ -86,7 +87,7 @@ class StreamFactory extends NetStreamFactory
      * @param \Psr\Http\Message\UriInterface $uri The URI to create server on.
      * @return \Phrity\Net\SocketServer A socket server instance.
      */
-    public function createSocketServer(UriInterface $uri): NetSocketServer
+    public function createSocketServer(UriInterface $uri, Context|null $context = null): NetSocketServer
     {
         return $this->mockHandle(function ($params) {
             return new SocketServer(...$params);

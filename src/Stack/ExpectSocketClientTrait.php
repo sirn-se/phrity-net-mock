@@ -2,8 +2,10 @@
 
 namespace Phrity\Net\Mock\Stack;
 
+use Psr\Http\Message\UriInterface;
+
 /**
- * PhpUnit test methods for SocketClient.
+ * Expect methods for SocketClient.
  */
 trait ExpectSocketClientTrait
 {
@@ -13,8 +15,9 @@ trait ExpectSocketClientTrait
     {
         return $this->pushStack(function (string $method, array $params): void {
             $this->assertEquals('SocketClient.__construct', $method);
-            $this->assertCount(1, $params);
-            $this->assertInstanceOf('Psr\Http\Message\UriInterface', $params[0]);
+            $this->assertGreaterThanOrEqual(1, count($params));
+            $this->assertLessThanOrEqual(2, count($params));
+            $this->assertInstanceOf(UriInterface::class, $params[0]);
         });
     }
 
@@ -24,6 +27,14 @@ trait ExpectSocketClientTrait
             $this->assertEquals('SocketClient.setContext', $method);
             $this->assertGreaterThanOrEqual(0, count($params));
             $this->assertLessThanOrEqual(2, count($params));
+        });
+    }
+
+    private function expectSocketClientGetContext(): StackItem
+    {
+        return $this->pushStack(function (string $method, array $params): void {
+            $this->assertEquals('SocketClient.getContext', $method);
+            $this->assertEmpty($params);
         });
     }
 
