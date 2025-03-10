@@ -150,4 +150,12 @@ trait ExpectSocketStreamTrait
             $this->assertEmpty($params);
         });
     }
+
+    private function expectSocketStreamGetContext(): StackItem
+    {
+        return $this->pushStack(function (string $method, array $params): void {
+            $this->assertEquals('SocketStream.getContext', $method);
+            $this->assertEmpty($params);
+        });
+    }
 }
