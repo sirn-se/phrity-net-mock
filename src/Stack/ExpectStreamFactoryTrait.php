@@ -47,7 +47,7 @@ trait ExpectStreamFactoryTrait
     {
         return $this->pushStack(function (string $method, array $params): void {
             $this->assertEquals('StreamFactory.createSocketClient', $method);
-            $this->assertCount(1, $params);
+            $this->assertCountRange(1, 2, $params);
             $this->assertInstanceOf('Psr\Http\Message\UriInterface', $params[0]);
         });
     }
