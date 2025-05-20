@@ -2,6 +2,7 @@
 
 namespace Phrity\Net\Mock\Stack;
 
+use Closure;
 use Phrity\Net\Mock\Mock;
 
 /**
@@ -9,12 +10,13 @@ use Phrity\Net\Mock\Mock;
  */
 trait StackTrait
 {
+    /** @var array<StackItem> */
     private $stack_items = [];
 
     private function setUpStack(): void
     {
         $this->stack_items = [];
-        Mock::setCallback(function (int $counter, string $method, array $params, callable $default, $instance) {
+        Mock::setCallback(function (int $counter, string $method, array $params, Closure $default, $instance) {
             $assert = array_shift($this->stack_items);
             if ($assert) {
                 return $assert($method, $params, $default, $instance);
@@ -31,14 +33,17 @@ trait StackTrait
         }
     }
 
-    private function pushStack(callable $callable): StackItem
+    private function pushStack(Closure $callable): StackItem
     {
         $item = new StackItem($callable);
         $this->stack_items[] = $item;
         return $item;
     }
 
-    private function assertCountRange(int $gte, int $lte, $actual): void
+    /**
+     * @param array<mixed> $actual
+     */
+    private function assertCountRange(int $gte, int $lte, array $actual): void
     {
         $count = count($actual);
         $this->assertGreaterThanOrEqual($gte, $count);

@@ -153,7 +153,8 @@ class TraitTest extends TestCase
 
     public function testtStream(): void
     {
-        $file = __DIR__ . '/fixtures/stream.txt';
+        $file = __DIR__ . '/../fixtures/stream.txt';
+        /** @var resource $resource */
         $resource = fopen($file, 'r+');
 
         $item = $this->expectStream();
@@ -192,11 +193,16 @@ class TraitTest extends TestCase
         $item = $this->expectStreamIsWritable();
         $this->assertInstanceOf(StackItem::class, $item);
         $stream->isWritable();
+
+        $item = $this->expectStreamGetContext();
+        $this->assertInstanceOf(StackItem::class, $item);
+        $stream->getContext();
     }
 
     public function testSocketStream(): void
     {
-        $file = __DIR__ . '/fixtures/stream.txt';
+        $file = __DIR__ . '/../fixtures/stream.txt';
+        /** @var resource $resource */
         $resource = fopen($file, 'r+');
 
         $item = $this->expectSocketStream();
@@ -270,6 +276,14 @@ class TraitTest extends TestCase
         $item = $this->expectSocketStreamIsWritable();
         $this->assertInstanceOf(StackItem::class, $item);
         $stream->isWritable();
+
+        $item = $this->expectSocketStreamHasContents();
+        $this->assertInstanceOf(StackItem::class, $item);
+        $stream->hasContents();
+
+        $item = $this->expectSocketStreamGetContext();
+        $this->assertInstanceOf(StackItem::class, $item);
+        $stream->getContext();
     }
 
     public function testStreamFactory(): void
@@ -322,9 +336,10 @@ class TraitTest extends TestCase
         $this->assertInstanceOf(StackItem::class, $item);
         $item = $this->expectContext();
         $this->assertInstanceOf(StackItem::class, $item);
-        $factory->createStreamFromFile(__DIR__ . '/fixtures/stream.txt');
+        $factory->createStreamFromFile(__DIR__ . '/../fixtures/stream.txt');
 
-        $file = __DIR__ . '/fixtures/stream.txt';
+        $file = __DIR__ . '/../fixtures/stream.txt';
+        /** @var resource $resource */
         $resource = fopen($file, 'r+');
         $item = $this->expectStreamFactoryCreateSocketStreamFromResource();
         $this->assertInstanceOf(StackItem::class, $item);
@@ -349,7 +364,8 @@ class TraitTest extends TestCase
         $this->assertInstanceOf(StackItem::class, $item);
         $collection = new StreamCollection();
 
-        $file = __DIR__ . '/fixtures/stream.txt';
+        $file = __DIR__ . '/../fixtures/stream.txt';
+        /** @var resource $resource */
         $resource = fopen($file, 'r+');
 
         $item = $this->expectStream();
@@ -422,6 +438,49 @@ class TraitTest extends TestCase
         $item = $this->expectContextGetOption();
         $this->assertInstanceOf(StackItem::class, $item);
         $context->getOption('testo', 'test2');
+
+        $function = function () {
+        };
+
+        $item = $this->expectContextOnResolve();
+        $this->assertInstanceOf(StackItem::class, $item);
+        $context->onResolve($function);
+
+        $item = $this->expectContextOnConnect();
+        $this->assertInstanceOf(StackItem::class, $item);
+        $context->onConnect($function);
+
+        $item = $this->expectContextOnAuthRequired();
+        $this->assertInstanceOf(StackItem::class, $item);
+        $context->onAuthRequired($function);
+
+        $item = $this->expectContextOnMimeType();
+        $this->assertInstanceOf(StackItem::class, $item);
+        $context->onMimeType($function);
+
+        $item = $this->expectContextOnFileSize();
+        $this->assertInstanceOf(StackItem::class, $item);
+        $context->onFileSize($function);
+
+        $item = $this->expectContextOnRedirected();
+        $this->assertInstanceOf(StackItem::class, $item);
+        $context->onRedirected($function);
+
+        $item = $this->expectContextOnProgress();
+        $this->assertInstanceOf(StackItem::class, $item);
+        $context->onProgress($function);
+
+        $item = $this->expectContextOnCompleted();
+        $this->assertInstanceOf(StackItem::class, $item);
+        $context->onCompleted($function);
+
+        $item = $this->expectContextOnFailure();
+        $this->assertInstanceOf(StackItem::class, $item);
+        $context->onFailure($function);
+
+        $item = $this->expectContextOnAuthResult();
+        $this->assertInstanceOf(StackItem::class, $item);
+        $context->onAuthResult($function);
     }
 
     public function testReturn(): void
@@ -447,10 +506,11 @@ class TraitTest extends TestCase
     public function testExpectedError(): void
     {
         // This should cause assertion error (this is tricky to test)
+        /** @phpstan-ignore assign.propertyType */
         $this->stack_items[] = 1;
         try {
             $this->tearDownStack();
-        } catch (\PHPUnit\Framework\AssertionFailedError $e) {
+        } catch (AssertionFailedError $e) {
             $this->stack_items = [];
             return;
         }

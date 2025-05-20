@@ -2,6 +2,7 @@
 
 namespace Phrity\Net\Mock;
 
+use Closure;
 use Psr\Log\{
     LoggerInterface,
     NullLogger
@@ -12,9 +13,9 @@ use Psr\Log\{
  */
 class Mock
 {
-    private static $logger;
-    private static $callback;
-    private static $counter;
+    private static LoggerInterface|null $logger = null;
+    private static Closure|null $callback  = null;
+    private static int $counter;
 
     public static function setLogger(LoggerInterface $logger): void
     {
@@ -29,13 +30,16 @@ class Mock
         return self::$logger;
     }
 
-    public static function setCallback(callable $callback): void
+    public static function setCallback(Closure $callback): void
     {
         self::$counter = 0;
         self::$callback = $callback;
     }
 
-    public static function runCallback(string $method, array $params, callable $default, object $instance)
+    /**
+     * @param array<string, mixed> $params
+     */
+    public static function runCallback(string $method, array $params, Closure $default, object $instance): mixed
     {
         return self::$callback
             ? call_user_func(self::$callback, self::$counter++, $method, $params, $default, $instance)

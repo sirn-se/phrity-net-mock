@@ -137,19 +137,30 @@ class SocketStreamTest extends TestCase
                     $this->assertIsCallable($default);
                     return $default($params);
                 case 21:
+                    $this->assertEquals('SocketStream.hasContents', $method);
+                    $this->assertEmpty($params);
+                    $this->assertIsCallable($default);
+                    return $default($params);
+                case 22:
                     $this->assertEquals('SocketStream.closeRead', $method);
                     $this->assertEquals([], $params);
                     $this->assertIsCallable($default);
                     break;
-                case 22:
+                case 23:
                     $this->assertEquals('SocketStream.closeWrite', $method);
                     $this->assertEquals([], $params);
                     $this->assertIsCallable($default);
                     break;
+                case 24:
+                    $this->assertEquals('SocketStream.detach', $method);
+                    $this->assertEquals([], $params);
+                    $this->assertIsCallable($default);
+                    return $default($params);
             }
         });
 
-        $file = __DIR__ . '/fixtures/stream.txt';
+        $file = __DIR__ . '/../fixtures/stream.txt';
+        /** @var resource $resource */
         $resource = fopen($file, 'r+');
 
         $stream = new SocketStream($resource);
@@ -169,6 +180,7 @@ class SocketStreamTest extends TestCase
         $stream->rewind();
         $stream->getContents();
         $stream->__toString();
+        $stream->hasContents();
         $stream->closeRead();
         $stream->closeWrite();
         $stream->detach();

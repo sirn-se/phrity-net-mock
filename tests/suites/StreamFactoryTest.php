@@ -75,7 +75,7 @@ class StreamFactoryTest extends TestCase
 
     public function testCreateStreamFromFile(): void
     {
-        $file = __DIR__ . '/fixtures/stream.txt';
+        $file = __DIR__ . '/../fixtures/stream.txt';
         Mock::setCallback(function ($counter, $method, $params, $default) use ($file) {
             switch ($counter) {
                 case 0:
@@ -131,7 +131,8 @@ class StreamFactoryTest extends TestCase
                     break;
             }
         });
-        $file = __DIR__ . '/fixtures/stream.txt';
+        $file = __DIR__ . '/../fixtures/stream.txt';
+        /** @var resource $resource */
         $resource = fopen($file, 'r+');
         $factory = new StreamFactory();
         $stream = $factory->createSocketStreamFromResource($resource);

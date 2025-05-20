@@ -54,7 +54,7 @@ By registring a callback handler, all calls will pass through the callback inste
 use Phrity\Net\Mock\Mock;
 use Phrity\Net\Mock\StreamFactory;
 
-Mock::setCallback(function (int $counter, string $method, array $params, callable $default) {
+Mock::setCallback(function (int $counter, string $method, array $params, Closure $default) {
     // Assert call and parameters
     // The returned value will be passed back to calling code.
     // If you want to return the result of original code, use the $default callable
@@ -70,6 +70,7 @@ $my_stream_user->run();
 
 | Version | PHP | |
 | --- | --- | --- |
+| `2.3` | `^8.1` | [phrity/net-stream v2.3](https://phrity.sirn.se/net-stream/2.3.0) |
 | `2.2` | `^8.1` | [phrity/net-stream v2.2](https://phrity.sirn.se/net-stream/2.2.0) |
 | `2.1` | `^8.0` | [phrity/net-stream v2.1](https://phrity.sirn.se/net-stream/2.1.0) |
 | `2.0` | `^8.0` | [phrity/net-stream v2.0](https://phrity.sirn.se/net-stream/2.0.0) |
