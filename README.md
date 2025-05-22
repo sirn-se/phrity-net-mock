@@ -58,13 +58,74 @@ Mock::setCallback(function (int $counter, string $method, array $params, Closure
     // Assert call and parameters
     // The returned value will be passed back to calling code.
     // If you want to return the result of original code, use the $default callable
-    return $default();
+    return $default($params);
 });
 
 $my_stream_user = new StreamUsingClass();
 $my_stream_user->setStreamfactory(new StreamFactory());
 $my_stream_user->run();
 ```
+
+## Expect stack in PhpUnit tests
+
+All methods have correspondent expectations that can be used in PhpUnit tests.
+Classes are imported as Traits, and methods are named by keyword + class name + method name.
+
+```php
+
+use Phrity\Net\Mock\ExpectSocketStreamTrait;
+use PHPUnit\Framework\TestCase;
+
+class MyTest extends TestCase
+{
+    use ExpectSocketStreamTrait;
+
+    public function setUp(): void
+    {
+        // Prepare except stack
+        $this->setUpStack();
+    }
+
+    public function tearDown(): void
+    {
+        // Assert that except stack is now empty
+        $this->tearDownStack();
+    }
+
+    public funcion myTest(): void
+    {
+        $this->expectSocketStream();
+        $this->expectSocketStreamGetMetadata();
+        $this->expectContext();
+        $stream = new SocketStream($resource);
+    }
+}
+```
+
+To assert input
+```php
+    public funcion myTest(): void
+    {
+        $this->expectSocketStreamWrite()->addAssert(function (string $method, array $params) {
+            // Assert input
+            $this->assertEquals('hello', $params[0]);
+        });
+        $stream->write('hello');
+    }
+```
+
+To overwrite return
+```php
+    public funcion myTest(): void
+    {
+        $this->expectSocketStreamGetLocalName()->setReturn(function () {
+            // Overwrite return
+            return 'my-mock-local-name';
+        });
+        $stream->getLocalName();
+    }
+```
+
 
 ## Versions
 
