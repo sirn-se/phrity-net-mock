@@ -124,7 +124,8 @@ class StreamTest extends TestCase
             }
         });
 
-        $file = __DIR__ . '/fixtures/stream.txt';
+        $file = __DIR__ . '/../fixtures/stream.txt';
+        /** @var resource $resource */
         $resource = fopen($file, 'r+');
 
         $stream = new Stream($resource);

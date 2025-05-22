@@ -32,9 +32,9 @@ class SocketClient extends NetSocketClient
 
     /**
      * Set stream context.
-     * @param array|null $options
-     * @param array|null $params
-     * @return self
+     * @param NetContext|array<string, array<string, mixed>>|null $options
+     * @param array<string, mixed>|null $params
+     * @return SocketClient
      */
     public function setContext(NetContext|array|null $options = null, array|null $params = null): self
     {
@@ -58,10 +58,10 @@ class SocketClient extends NetSocketClient
 
     /**
      * Set timeout in seconds.
-     * @param int|null $timeout
+     * @param int<0, max>|float|null $timeout
      * @return self
      */
-    public function setTimeout(int|null $timeout): self
+    public function setTimeout(int|float|null $timeout): self
     {
         return $this->mockHandle();
     }
@@ -76,6 +76,7 @@ class SocketClient extends NetSocketClient
     public function connect(): SocketStream
     {
         return $this->mockHandle(function () {
+            /** @var resource $mock_stream */
             $mock_stream = fopen('php://temp', 'rw');
             return new SocketStream($mock_stream);
         });

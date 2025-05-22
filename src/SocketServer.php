@@ -80,9 +80,9 @@ class SocketServer extends NetSocketServer
 
     /**
      * Set stream context.
-     * @param array|null $options
-     * @param array|null $params
-     * @return self
+     * @param Context|array<string, array<string, mixed>>|null $options
+     * @param array<string, mixed>|null $params
+     * @return static
      */
     public function setContext(NetContext|array|null $options = null, array|null $params = null): self
     {
@@ -96,7 +96,7 @@ class SocketServer extends NetSocketServer
 
     /**
      * Retrieve list of registered socket transports.
-     * @return array List of registered transports.
+     * @return array<string> List of registered transports.
      */
     public function getTransports(): array
     {
@@ -127,12 +127,13 @@ class SocketServer extends NetSocketServer
 
     /**
      * Accept a connection on a socket.
-     * @param int|null $timeout Override the default socket accept timeout.
+     * @param int<0, max>|float|null $timeout Override the default socket accept timeout.
      * @return SocketStream|null The stream for opened conenction.
      */
-    public function accept(int|null $timeout = null): SocketStream|null
+    public function accept(int|float|null $timeout = null): SocketStream|null
     {
         return $this->mockHandle(function () {
+            /** @var resource $mock_stream */
             $mock_stream = fopen('php://temp', 'rw');
             return new SocketStream($mock_stream);
         });

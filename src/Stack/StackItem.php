@@ -2,34 +2,40 @@
 
 namespace Phrity\Net\Mock\Stack;
 
+use Closure;
+
 /**
  * Runnable item for stack.
  */
 class StackItem
 {
-    private $asserts = [];
-    private $return = null;
+    /** @var array<Closure> $asserts */
+    private array $asserts = [];
+    private mixed $return = null;
 
-    public function __construct(callable|null $assert = null)
+    public function __construct(Closure|null $assert = null)
     {
         if ($assert) {
             $this->addAssert($assert);
         }
     }
 
-    public function addAssert(callable $assert): self
+    public function addAssert(Closure $assert): self
     {
         $this->asserts[] = $assert;
         return $this;
     }
 
-    public function setReturn(callable $return): self
+    public function setReturn(Closure $return): self
     {
         $this->return = $return;
         return $this;
     }
 
-    public function __invoke(string $method, array $params, callable $default, object $instance)
+    /**
+     * @param array<string, mixed> $params
+     */
+    public function __invoke(string $method, array $params, Closure $default, object $instance): mixed
     {
         foreach ($this->asserts as $assert) {
             call_user_func($assert, $method, $params);

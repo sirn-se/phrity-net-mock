@@ -64,10 +64,10 @@ class StreamCollection extends NetStreamCollection
 
     /**
      * Wait for redable content in stream collection.
-     * @param int $seconds Timeout in seconds.
+     * @param int<0, max>|float $timeout Timeout in seconds.
      * @return self New collection instance.
      */
-    public function waitRead(int $seconds = 60): NetStreamCollection
+    public function waitRead(int|float $timeout = 60): NetStreamCollection
     {
         return $this->mockHandle(function ($params) {
             return new self();

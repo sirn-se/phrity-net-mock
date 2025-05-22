@@ -235,14 +235,19 @@ class SocketStream extends NetSocketStream
         return $this->mockHandle();
     }
 
+    public function hasContents(): bool
+    {
+        return $this->mockHandle();
+    }
+
     /**
      * Set timeout period on a stream.
-     * @param int $seconds Seconds to be set.
-     * @param int $microseconds Microseconds to be set.
+     * @param int<0, max>|float $timeout Seconds to be set.
+     * @param int|null $microseconds Microseconds to be set.
      * @return bool If operation was succesful.
      * @throws \RuntimeException if stream is closed.
      */
-    public function setTimeout(int $seconds, int $microseconds = 0): bool
+    public function setTimeout(int|float $timeout, int|null $microseconds = null): bool
     {
         return $this->mockHandle();
     }

@@ -28,11 +28,18 @@ class EchoLogger implements LoggerInterface
         echo "[{$level}] {$message} {$this->format($context)}\n";
     }
 
+    /**
+     * @param array<string, mixed> $context
+     */
     private function format(array $context): string
     {
-        return json_encode($context, JSON_FORCE_OBJECT);
+        return json_encode($context, JSON_FORCE_OBJECT) ?: '';
     }
 
+    /**
+     * @param array<string, mixed> $context
+     * @return array<string, mixed>
+     */
     private function stringify(array $context): array
     {
         return array_map(function ($item) {
@@ -46,7 +53,10 @@ class EchoLogger implements LoggerInterface
         }, $context);
     }
 
-    private function interpolate(string $message, array $context = [])
+    /**
+     * @param array<string, mixed> $context
+     */
+    private function interpolate(string $message, array $context = []): string
     {
         $replace = [];
         foreach ($context as $key => $val) {

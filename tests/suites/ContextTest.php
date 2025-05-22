@@ -30,5 +30,26 @@ class ContextTest extends TestCase
             ],
         ], $context->getOptions());
         $this->assertEquals('test-1', $context->getOption('testo', 'test1'));
+
+        $context->onResolve(function () {
+        });
+        $context->onConnect(function () {
+        });
+        $context->onAuthRequired(function () {
+        });
+        $context->onMimeType(function (string $mimeType) {
+        });
+        $context->onFileSize(function (int $fileSize) {
+        });
+        $context->onRedirected(function (string $uri) {
+        });
+        $context->onProgress(function (int $transferred, int $max) {
+        });
+        $context->onCompleted(function () {
+        });
+        $context->onFailure(function (string $message, int $code) {
+        });
+        $context->onAuthResult(function () {
+        });
     }
 }
