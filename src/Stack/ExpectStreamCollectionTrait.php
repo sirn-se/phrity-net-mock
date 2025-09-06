@@ -2,6 +2,8 @@
 
 namespace Phrity\Net\Mock\Stack;
 
+use Phrity\Net\StreamInterface;
+
 /**
  * Expect methods for StreamCollection.
  */
@@ -22,7 +24,7 @@ trait ExpectStreamCollectionTrait
         return $this->pushStack(function (string $method, array $params): void {
             $this->assertEquals('StreamCollection.attach', $method);
             $this->assertCountRange(1, 2, $params);
-            $this->assertInstanceOf('Phrity\Net\Stream', $params[0]);
+            $this->assertInstanceOf(StreamInterface::class, $params[0]);
         });
     }
 
@@ -47,6 +49,14 @@ trait ExpectStreamCollectionTrait
         return $this->pushStack(function (string $method, array $params): void {
             $this->assertEquals('StreamCollection.waitRead', $method);
             $this->assertCountRange(0, 1, $params);
+        });
+    }
+
+    private function expectStreamCollectionCount(): StackItem
+    {
+        return $this->pushStack(function (string $method, array $params): void {
+            $this->assertEquals('StreamCollection.count', $method);
+            $this->assertEmpty($params);
         });
     }
 }

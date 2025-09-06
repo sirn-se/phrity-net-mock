@@ -395,6 +395,10 @@ class TraitTest extends TestCase
         $item = $this->expectStreamCollectionDetach();
         $this->assertInstanceOf(StackItem::class, $item);
         $collection->detach($stream);
+
+        $item = $this->expectStreamCollectionCount();
+        $this->assertInstanceOf(StackItem::class, $item);
+        $collection->count();
     }
 
     public function testContext(): void
@@ -509,6 +513,7 @@ class TraitTest extends TestCase
         /** @phpstan-ignore assign.propertyType */
         $this->stack_items[] = 1;
         try {
+            /** @throws AssertionFailedError */
             $this->tearDownStack();
         } catch (AssertionFailedError $e) {
             $this->stack_items = [];

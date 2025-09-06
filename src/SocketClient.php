@@ -17,9 +17,8 @@ class SocketClient extends NetSocketClient
 
     /**
      * Create new socker server instance
-     * \Psr\Http\Message\UriInterface $uri The URI to open socket on.
+     * UriInterface $uri The URI to open socket on.
      * int $flags Flags to set on socket.
-     * @throws \RuntimeException if unable to create socket.
      */
     public function __construct(UriInterface $uri, NetContext|null $context = null)
     {

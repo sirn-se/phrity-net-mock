@@ -2,8 +2,11 @@
 
 namespace Phrity\Net\Mock;
 
-use Phrity\Net\StreamCollection as NetStreamCollection;
-use Phrity\Net\Stream as NetStream;
+use Phrity\Net\{
+    Stream as NetStream,
+    StreamCollection as NetStreamCollection,
+    StreamInterface,
+};
 
 /**
  * Phrity\Net\Mock\StreamCollection class.
@@ -25,21 +28,21 @@ class StreamCollection extends NetStreamCollection
 
     /**
      * Attach stream to collection.
-     * @param Stream $attach Stream to attach.
+     * @param StreamInterface $attach Stream to attach.
      * @param string|null $key Definable name of stream.
      * @return string Name of stream.
      */
-    public function attach(NetStream $attach, string|null $key = null): string
+    public function attach(StreamInterface $attach, string|null $key = null): string
     {
         return $this->mockHandle();
     }
 
     /**
      * Detach stream from collection.
-     * @param Stream|string $detach Stream or name of stream  to detach.
+     * @param StreamInterface|string $detach Stream or name of stream  to detach.
      * @return bool If a stream was detached.
      */
-    public function detach(NetStream|string $detach): bool
+    public function detach(StreamInterface|string $detach): bool
     {
         return $this->mockHandle();
     }

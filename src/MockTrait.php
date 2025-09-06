@@ -22,7 +22,7 @@ trait MockTrait
         $params = $trace[1]['args'];
 
         Mock::getLogger()->debug("{$class}.{$method}", $params);
-        $default = $default ?: function ($params) use ($method) {
+        $default = $default ?? function ($params) use ($method) {
             $parent = get_parent_class($this);
             /** @var callable $callback */
             $callback = [$parent, $method];
