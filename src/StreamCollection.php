@@ -6,6 +6,7 @@ use Phrity\Net\{
     Stream as NetStream,
     StreamCollection as NetStreamCollection,
     StreamInterface,
+    StreamContainerInterface,
 };
 
 /**
@@ -28,21 +29,21 @@ class StreamCollection extends NetStreamCollection
 
     /**
      * Attach stream to collection.
-     * @param StreamInterface $attach Stream to attach.
+     * @param StreamInterface|StreamContainerInterface $attach Stream to attach.
      * @param string|null $key Definable name of stream.
      * @return string Name of stream.
      */
-    public function attach(StreamInterface $attach, string|null $key = null): string
+    public function attach(StreamInterface|StreamContainerInterface $attach, string|null $key = null): string
     {
         return $this->mockHandle();
     }
 
     /**
      * Detach stream from collection.
-     * @param StreamInterface|string $detach Stream or name of stream  to detach.
+     * @param StreamInterface|StreamContainerInterface|string $detach Stream or name of stream  to detach.
      * @return bool If a stream was detached.
      */
-    public function detach(StreamInterface|string $detach): bool
+    public function detach(StreamInterface|StreamContainerInterface|string $detach): bool
     {
         return $this->mockHandle();
     }

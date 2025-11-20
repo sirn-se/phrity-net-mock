@@ -15,11 +15,12 @@ trait MockTrait
 {
     private function mockHandle(Closure|null $default = null): mixed
     {
-        /** @var array<int, array{class: string, function: string, args: array<string, mixed>}> $trace */
+        /** var list<int, array{class: string, function: string, args: array<string, mixed>}> $trace */
+        /** @var list<array{function: string, line?: int, file?: string, class?: class-string, type?: '->'|'::', args?: list<mixed>, object?: object}> */
         $trace = debug_backtrace(0, 2);
-        $class = substr($trace[1]['class'], 16);
+        $class = substr($trace[1]['class'] ?? '', 16);
         $method = $trace[1]['function'];
-        $params = $trace[1]['args'];
+        $params = $trace[1]['args'] ?? [];
 
         Mock::getLogger()->debug("{$class}.{$method}", $params);
         $default = $default ?? function ($params) use ($method) {
