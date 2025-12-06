@@ -37,7 +37,7 @@ class Mock
     }
 
     /**
-     * @param array<string, mixed> $params
+     * @param list<mixed> $params
      */
     public static function runCallback(string $method, array $params, Closure $default, object $instance): mixed
     {

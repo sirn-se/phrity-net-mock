@@ -3,6 +3,7 @@
 namespace Phrity\Net\Mock\Stack;
 
 use Closure;
+use PHPUnit\Framework\AssertionFailedError;
 use Phrity\Net\Mock\Mock;
 
 /**
@@ -25,6 +26,9 @@ trait StackTrait
         });
     }
 
+    /**
+     * @throws AssertionFailedError
+     */
     private function tearDownStack(): void
     {
         if (!empty($this->stack_items)) {

@@ -15,7 +15,13 @@ trait MockTrait
 {
     private function mockHandle(Closure|null $default = null): mixed
     {
-        /** @var array<int, array{class: string, function: string, args: array<string, mixed>}> $trace */
+        /**
+         * @var list<array{
+         *   class: string,
+         *   function: string,
+         *   args: list<mixed>
+         * }> $trace
+         */
         $trace = debug_backtrace(0, 2);
         $class = substr($trace[1]['class'], 16);
         $method = $trace[1]['function'];
