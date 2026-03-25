@@ -2,9 +2,11 @@
 
 namespace Phrity\Net\Mock;
 
+use InvalidArgumentException;
 use Phrity\Net\{
     Context as NetContext,
-    SocketStream as NetSocketStream
+    SocketStream as NetSocketStream,
+    StreamException,
 };
 
 /**
@@ -245,10 +247,15 @@ class SocketStream extends NetSocketStream
      * @param int<0, max>|float $timeout Seconds to be set.
      * @param int|null $microseconds Microseconds to be set.
      * @return bool If operation was succesful.
-     * @throws \RuntimeException if stream is closed.
+     * @throws InvalidArgumentException if invalid timeout.
+     * @throws StreamException if stream is closed.
      */
     public function setTimeout(int|float $timeout, int|null $microseconds = null): bool
     {
+        /**
+         * @throws InvalidArgumentException
+         * @throws StreamException
+         */
         return $this->mockHandle();
     }
 
@@ -259,10 +266,13 @@ class SocketStream extends NetSocketStream
      * Read line from the stream.
      * @param int $length Read up to $length bytes from the object and return them.
      * @return string|null Returns the data read from the stream, or null of eof.
-     * @throws \RuntimeException if an error occurs.
+     * @throws StreamException if an error occurs.
      */
     public function readLine(int $length): string|null
     {
+        /**
+         * @throws StreamException
+         */
         return $this->mockHandle();
     }
 

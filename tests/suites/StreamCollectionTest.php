@@ -95,6 +95,11 @@ class StreamCollectionTest extends TestCase
                     $this->assertIsCallable($default);
                     $default($params);
                     break;
+                case 15:
+                    $this->assertEquals('StreamCollection.count', $method);
+                    $this->assertEquals([], $params);
+                    $this->assertIsCallable($default);
+                    return $default($params);
             }
         });
 
@@ -110,5 +115,6 @@ class StreamCollectionTest extends TestCase
         $collection->getReadable();
         $collection->getWritable();
         $collection->waitRead();
+        $collection->count();
     }
 }
