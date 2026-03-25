@@ -14,12 +14,12 @@ class ContextTest extends TestCase
         $context = new Context();
         $this->assertIsResource($context->getResource());
         $context->setParams(['notification' => 'trim']);
-        $context->setParam('notification', 'trim');
+        $context->setParam('notification', 'ltrim');
         $this->assertEquals([
             'options' => [],
-            'notification' => 'trim',
+            'notification' => 'ltrim',
         ], $context->getParams());
-        $this->assertEquals('trim', $context->getParam('notification'));
+        $this->assertEquals('ltrim', $context->getParam('notification'));
 
         $context->setOptions(['testo' => ['test1' => 'test-1']]);
         $context->setOption('testo', 'test2', 'test-2');

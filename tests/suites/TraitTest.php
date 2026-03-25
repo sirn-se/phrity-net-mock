@@ -415,7 +415,7 @@ class TraitTest extends TestCase
         $this->assertInstanceOf(StackItem::class, $item);
         $item = $this->expectContextSetParams();
         $this->assertInstanceOf(StackItem::class, $item);
-        $context->setParam('notification', 'trim');
+        $context->setParam('notification', 'ltrim');
 
         $item = $this->expectContextGetParams();
         $this->assertInstanceOf(StackItem::class, $item);
